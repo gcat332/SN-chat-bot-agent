@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>true</active>
+        <api_name>global.MF_AIUtils</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>MF_AIUtils</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var MF_AIUtils = Class.create();
+MF_AIUtils.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+    getAIanswer: function() {
+        var question = this.getParameter('sysparm_ques');
+        try {
+            var requestBody = this._getReuestBody(question);
+            var request = new sn_ws.RESTMessageV2();
+            request.setHttpMethod('post');
+            request.setEndpoint('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyDoeFXNAZ40C6j2Pwn_He5ZkU_pCIdzQ0k')
+            request.setRequestHeader('Content-Type', 'application/json');
+            request.setRequestBody(requestBody);
+            var response = request.execute();
+            var responseBody = response.getBody();
+            var httpStatus = response.getStatusCode();
+            var JSOBresponse = JSON.parse(responseBody);
+            var answer = JSOBresponse.candidates[0].content.parts[0].text;
+            return this._removeCodeBlockWrappers(answer);
+        } catch (ex) {
+            return 'Error: '+ex.message;
+        }
+    },
+
+    _getReuestBody: function(question) {
+        gr = new GlideRecord('u_mf_ai_chat_bot_history');
+        gr.addQuery('u_session', gs.getSession().getSessionID());
+        gr.orderByDesc('sys_created_on');
+        gr.setLimit(4);
+        gr.query();
+
+        var history = [];
+        history.push({
+            role: 'user',
+            parts: [{
+                text: "คุณคือ MFEC AI Agent สุดฉลาดที่จะช่วยตอบคำถามอย่างแม่นยำ!"
+            }]
+        });
+        var stack = [];
+        while (gr.next()) {
+            stack.unshift({
+                role: gr.getValue('u_type') === 'user' ? 'user' : 'model',
+                parts: [{ text: this._stripHTMLTags(gr.getValue('u_message')) }]
+            });
+        }
+        history = stack;
+        history.push({
+            role: 'user',
+            parts: [{
+                text: "ช่วยตอบคำถามมาในรูปแบบของ HTML สำหรับแสดงผลในช่องแชทที่มีขนาดตัวอักษรเท่าเดิมเสมอ โดยไม่ต้องมีคำอธิบาย markdown\nคำถาม: " + question
+            }]
+        });
+        // สร้าง JSON body
+        var requestBody = JSON.stringify({
+            contents: history
+        });
+        return requestBody;
+    },
+
+    _stripHTMLTags: function(text) {
+        if (typeof text !== 'string') return text;
+        return text.replace(/<[^>]*>/g, '');
+    },
+
+    _removeCodeBlockWrappers: function(text) {
+    if (typeof text !== 'string') return text;
+    var processedText = text.replace(/^```html\s*([\s\S]*?)\s*```$/gm, '$1');
+    processedText = processedText.replace(/^```\s*([\s\S]*?)\s*```$/gm, '$1');
+    return processedText.trim();
+    },
+
+    saveMessage: function() {
+        var msg = this.getParameter('sysparm_msg');
+        var type = this.getParameter('sysparm_type');
+        var session = this.getParameter('sysparm_session');
+        var user = type == 'user' ?this.getParameter('sysparm_user') : '497bf12793696a507ff935277bba104c';
+        var gr = new GlideRecord('u_mf_ai_chat_bot_history');
+        gr.initialize();
+        gr.u_message = msg;
+        gr.u_message_html = msg;
+        gr.u_type = type;
+        gr.u_session = session;
+        gr.u_user = user;
+        gr.insert();
+    },
+
+    getHistory: function() {
+        var session = this.getParameter('sysparm_session');
+        var gr = new GlideRecord('u_mf_ai_chat_bot_history');
+        gr.addQuery('u_session', session);
+        gr.orderBy('sys_created_on');
+        gr.query();
+        var history = [];
+        while (gr.next()) {
+        history.push({
+            msg: gr.getValue('u_message'),
+            type: gr.getValue('u_type')
+        });
+        }
+        return new global.JSON().encode(history);
+    },
+
+    clearHistory: function() {
+        var session = this.getParameter('sysparm_session');
+        var gr = new GlideRecord('u_mf_ai_chat_bot_history');
+        gr.addQuery('u_session', session);
+        gr.deleteMultiple();
+    },
+    type: 'MF_AIUtils'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin.gust</sys_created_by>
+        <sys_created_on>2025-05-22 15:40:58</sys_created_on>
+        <sys_id>26e1b1af93e56a507ff935277bba10c9</sys_id>
+        <sys_mod_count>47</sys_mod_count>
+        <sys_name>MF_AIUtils</sys_name>
+        <sys_package display_value="MFEC AI Utils GB" source="7efc99ef93e16a507ff935277bba10ee">7efc99ef93e16a507ff935277bba10ee</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="MFEC AI Utils GB">7efc99ef93e16a507ff935277bba10ee</sys_scope>
+        <sys_update_name>sys_script_include_26e1b1af93e56a507ff935277bba10c9</sys_update_name>
+        <sys_updated_by>admin.gust</sys_updated_by>
+        <sys_updated_on>2025-05-23 01:44:26</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>26e1b1af93e56a507ff935277bba10c9</id>
+        <sys_created_by>admin.gust</sys_created_by>
+        <sys_created_on>2025-05-22 15:40:58</sys_created_on>
+        <sys_id>b7f131af93e56a507ff935277bba104e</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin.gust</sys_updated_by>
+        <sys_updated_on>2025-05-22 15:40:58</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

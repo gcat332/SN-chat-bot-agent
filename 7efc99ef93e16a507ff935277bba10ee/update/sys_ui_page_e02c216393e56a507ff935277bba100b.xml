@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_page">
+    <sys_ui_page action="INSERT_OR_UPDATE">
+        <category>cms</category>
+        <client_script/>
+        <description/>
+        <direct>false</direct>
+        <endpoint/>
+        <html><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide">
+    <html>
+
+    <head>
+        <style>
+            html,
+            body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+
+            .chat-container {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                padding: 16px;
+            }
+
+            #chatbox {
+                flex: 1;
+                min-height: 0;
+                background-color: #fff;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                padding: 10px;
+                overflow-y: auto;
+                box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+                margin-bottom: 12px;
+                font-size: 14px;
+                line-height: 1.4;
+            }
+
+            h2 {
+                margin-top: 0;
+                font-size: 20px;
+                color: #444;
+                border-bottom: 1px solid #ddd;
+                padding-bottom: 8px;
+            }
+
+            .msg {
+                margin: 6px 0;
+                display: flex;
+                clear: both;
+            }
+
+            .user-msg {
+                justify-content: flex-end;
+            }
+
+            .bot-msg {
+                justify-content: flex-start;
+            }
+
+            .bubble {
+                max-width: 70%;
+                padding: 8px 12px;
+                border-radius: 12px;
+                line-height: 1.4;
+            }
+
+            .user-bubble {
+                background-color: #d0ebff;
+                color: #004085;
+            }
+
+            .bot-bubble {
+                background-color: #f1f1f1;
+                color: #333;
+            }
+
+            #msgInput {
+                width: calc(100% - 100px);
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 6px;
+                font-size: 14px;
+                margin-right: 8px;
+                box-sizing: border-box;
+            }
+
+            button {
+                padding: 10px 16px;
+                background-color: #3276b1;
+                color: white;
+                border: none;
+                border-radius: 6px;
+                font-size: 14px;
+                cursor: pointer;
+                transition: background-color 0.2s ease;
+            }
+
+            button:hover {
+                background-color: #285e8e;
+            }
+
+            @media (max-width: 480px) {
+                #msgInput {
+                    width: 100%;
+                    margin-bottom: 8px;
+                }
+
+                button {
+                    width: 100%;
+                }
+            }
+        </style>
+    </head>
+
+    <body onload="loadChatHistory()">
+        <div class="chat-container">
+            <h2>]]>💬<![CDATA[ Chat With MFEC AI Agent</h2>
+
+            <div id="chatbox">
+                <div class="msg bot-msg">
+                    <div class="bubble bot-bubble">เริ่มแชทที่นี่...</div>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 8px; align-items: center; margin-top: 10px;">
+                <input type="text" id="msgInput" placeholder="พิมพ์ข้อความ..." style="flex: 6; padding: 8px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px;" />
+                <button onclick="sendMsg()" style="flex: 2; padding: 8px; font-size: 14px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                    ส่ง
+                </button>
+                <button onclick="clearHistory()" style="flex: 2; padding: 8px; font-size: 14px; background-color: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                    ล้าง
+                </button>
+            </div>
+        </div>
+    </body>
+
+    <script>
+        var userId = "${gs.getUserID()}";
+		var sessionId = "${gs.getSession().getSessionID()}";
+
+		document.getElementById('msgInput').addEventListener('keydown', function(event) {
+		if (event.key === 'Enter') {
+				event.preventDefault(); // ป้องกันการขึ้นบรรทัดใหม่
+				sendMsg(); // เรียกฟังก์ชันส่งข้อความ
+			}
+		});
+
+        function loadChatHistory() {
+            var ga = new GlideAjax('MF_AIUtils');
+            ga.addParam('sysparm_name', 'getHistory');
+            ga.addParam('sysparm_session', sessionId);
+            ga.getXML(function(response) {
+                var answer = response.responseXML.documentElement.getAttribute('answer');
+                var messages = JSON.parse(answer);
+                messages.forEach(function(m) {
+                    appendMessage(m.msg, m.type);
+                });
+            });
+        }
+
+        function sendMsg() {
+            var msg = document.getElementById('msgInput').value.trim();
+            if (!msg) return;
+            appendMessage(msg, 'user');
+            saveMessage(msg, 'user');
+
+            document.getElementById('msgInput').value = "";
+
+            getBotReply(msg, function(botReply) {
+                appendMessage(botReply, 'bot');
+                saveMessage(botReply, 'bot');
+            });
+        }
+
+        function appendMessage(text, type) {
+            var chat = document.getElementById('chatbox');
+            var msgDiv = document.createElement('div');
+            msgDiv.className = 'msg ' + (type === 'user' ? 'user-msg' : 'bot-msg');
+            msgDiv.innerHTML = '<div class="bubble ' + (type === 'user' ? 'user-bubble' : 'bot-bubble') + '">'+ text +
+                '</div>';
+            chat.appendChild(msgDiv);
+            chat.scrollTop = chat.scrollHeight;
+        }
+
+        function saveMessage(text, type) {
+            var ga = new GlideAjax('MF_AIUtils');
+            ga.addParam('sysparm_name', 'saveMessage');
+            ga.addParam('sysparm_msg', text);
+            ga.addParam('sysparm_type', type);
+            ga.addParam('sysparm_session', sessionId);
+			ga.addParam('sysparm_user', userId);
+            ga.getXML();
+        }
+
+        // ฟังก์ชันใหม่: รับข้อความผู้ใช้ + callback เมื่อได้คำตอบจาก GlideAjax
+        function getBotReply(msg, callback) {
+            var ga = new GlideAjax('MF_AIUtils'); // ใช้ชื่อ Script Include ที่คุณสร้างไว้
+            ga.addParam('sysparm_name', 'getAIanswer');
+            ga.addParam('sysparm_ques', msg);
+            ga.getXML(function(response) {
+                var answer = response.responseXML.documentElement.getAttribute("answer");
+                callback(answer); // เรียก callback พร้อมคำตอบ
+            });
+        }
+
+        function clearHistory() {
+            var chat = document.getElementById('chatbox');
+            chat.innerHTML = '';
+
+            var ga = new GlideAjax('MF_AIUtils');
+            ga.addParam('sysparm_name', 'clearHistory');
+            ga.addParam('sysparm_session', sessionId);
+            ga.getXML();
+        }
+    </script>
+    </html>
+</j:jelly>]]></html>
+        <name>chat_ui</name>
+        <processing_script/>
+        <sys_class_name>sys_ui_page</sys_class_name>
+        <sys_created_by>admin.gust</sys_created_by>
+        <sys_created_on>2025-05-22 15:16:05</sys_created_on>
+        <sys_id>e02c216393e56a507ff935277bba100b</sys_id>
+        <sys_mod_count>37</sys_mod_count>
+        <sys_name>chat_ui</sys_name>
+        <sys_package display_value="MFEC AI Utils GB" source="7efc99ef93e16a507ff935277bba10ee">7efc99ef93e16a507ff935277bba10ee</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="MFEC AI Utils GB">7efc99ef93e16a507ff935277bba10ee</sys_scope>
+        <sys_update_name>sys_ui_page_e02c216393e56a507ff935277bba100b</sys_update_name>
+        <sys_updated_by>admin.gust</sys_updated_by>
+        <sys_updated_on>2025-05-23 01:42:06</sys_updated_on>
+    </sys_ui_page>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>e02c216393e56a507ff935277bba100b</id>
+        <sys_created_by>admin.gust</sys_created_by>
+        <sys_created_on>2025-05-22 15:16:04</sys_created_on>
+        <sys_id>174c696393e56a507ff935277bba109a</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin.gust</sys_updated_by>
+        <sys_updated_on>2025-05-22 15:16:04</sys_updated_on>
+        <table>sys_ui_page</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

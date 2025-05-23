@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl_role">
+    <sys_security_acl_role action="INSERT_OR_UPDATE">
+        <sys_class_name>sys_security_acl_role</sys_class_name>
+        <sys_created_by>admin.gust</sys_created_by>
+        <sys_created_on>2025-05-22 16:20:59</sys_created_on>
+        <sys_id>8a2bf5e393696a507ff935277bba101c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>u_mf_ai_chat_bot_history.u_mf_ai_chat_bot_history_user</sys_name>
+        <sys_package display_value="MFEC AI Utils GB" source="7efc99ef93e16a507ff935277bba10ee">7efc99ef93e16a507ff935277bba10ee</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="MFEC AI Utils GB">7efc99ef93e16a507ff935277bba10ee</sys_scope>
+        <sys_security_acl display_value="u_mf_ai_chat_bot_history">822bf5e393696a507ff935277bba1014</sys_security_acl>
+        <sys_update_name>sys_security_acl_role_8a2bf5e393696a507ff935277bba101c</sys_update_name>
+        <sys_updated_by>admin.gust</sys_updated_by>
+        <sys_updated_on>2025-05-22 16:20:59</sys_updated_on>
+        <sys_user_role display_value="u_mf_ai_chat_bot_history_user" name="u_mf_ai_chat_bot_history_user">692b71e393696a507ff935277bba10f4</sys_user_role>
+    </sys_security_acl_role>
+</record_update>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script_client">
+    <sys_script_client action="DELETE">
+        <active>true</active>
+        <applies_extended>false</applies_extended>
+        <condition/>
+        <description/>
+        <field/>
+        <global>true</global>
+        <isolate_script>true</isolate_script>
+        <messages/>
+        <name>TestChatUI</name>
+        <order/>
+        <script><![CDATA[function onLoad() {
+   //Type appropriate comment here, and begin script below
+   new injectCustomIcon();
+}]]></script>
+        <sys_class_name>sys_script_client</sys_class_name>
+        <sys_created_by>admin.gust</sys_created_by>
+        <sys_created_on>2025-05-22 15:19:18</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>60eceda393e56a507ff935277bba10ab</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>TestChatUI</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="MFEC AI Utils GB" source="7efc99ef93e16a507ff935277bba10ee">7efc99ef93e16a507ff935277bba10ee</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="MFEC AI Utils GB">7efc99ef93e16a507ff935277bba10ee</sys_scope>
+        <sys_update_name>sys_script_client_60eceda393e56a507ff935277bba10ab</sys_update_name>
+        <sys_updated_by>admin.gust</sys_updated_by>
+        <sys_updated_on>2025-05-22 15:20:57</sys_updated_on>
+        <table>incident</table>
+        <type>onLoad</type>
+        <ui_type>10</ui_type>
+        <view/>
+    </sys_script_client>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="MFEC AI Utils GB">7efc99ef93e16a507ff935277bba10ee</application>
+        <file_path/>
+        <instance_id>114ad8d7dba6af4007072f17d496193e</instance_id>
+        <instance_name>mfecplcdemo2</instance_name>
+        <name>sys_script_client_60eceda393e56a507ff935277bba10ab</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update sys_domain="global" table="sys_script_client"&gt;&lt;sys_script_client action="INSERT_OR_UPDATE"&gt;&lt;active&gt;true&lt;/active&gt;&lt;applies_extended&gt;false&lt;/applies_extended&gt;&lt;condition/&gt;&lt;description/&gt;&lt;field/&gt;&lt;global&gt;true&lt;/global&gt;&lt;isolate_script&gt;true&lt;/isolate_script&gt;&lt;messages/&gt;&lt;name&gt;TestChatUI&lt;/name&gt;&lt;order/&gt;&lt;script&gt;&lt;![CDATA[function onLoad() {
+   //Type appropriate comment here, and begin script below
+   new injectCustomIcon();
+}]]&gt;&lt;/script&gt;&lt;sys_class_name&gt;sys_script_client&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin.gust&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2025-05-22 15:19:18&lt;/sys_created_on&gt;&lt;sys_domain&gt;global&lt;/sys_domain&gt;&lt;sys_domain_path&gt;/&lt;/sys_domain_path&gt;&lt;sys_id&gt;60eceda393e56a507ff935277bba10ab&lt;/sys_id&gt;&lt;sys_mod_count&gt;1&lt;/sys_mod_count&gt;&lt;sys_name&gt;TestChatUI&lt;/sys_name&gt;&lt;sys_overrides/&gt;&lt;sys_package display_value="MFEC AI Utils GB" source="7efc99ef93e16a507ff935277bba10ee"&gt;7efc99ef93e16a507ff935277bba10ee&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="MFEC AI Utils GB"&gt;7efc99ef93e16a507ff935277bba10ee&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_script_client_60eceda393e56a507ff935277bba10ab&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin.gust&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2025-05-22 15:20:57&lt;/sys_updated_on&gt;&lt;table&gt;incident&lt;/table&gt;&lt;type&gt;onLoad&lt;/type&gt;&lt;ui_type&gt;10&lt;/ui_type&gt;&lt;view/&gt;&lt;/sys_script_client&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>-349106523</payload_hash>
+        <record_name>TestChatUI</record_name>
+        <reverted_from/>
+        <source>241c2d2393e56a507ff935277bba1093</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin.gust</sys_created_by>
+        <sys_created_on>2025-05-22 15:20:57</sys_created_on>
+        <sys_id>266da12793e56a507ff935277bba10b9</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>196f89551740000001</sys_recorded_at>
+        <sys_updated_by>admin.gust</sys_updated_by>
+        <sys_updated_on>2025-05-22 15:20:57</sys_updated_on>
+        <type>Client Script</type>
+        <update_guid>6a6da1272ee56a50e6940c97f452e1b8</update_guid>
+        <update_guid_history>6a6da1272ee56a50e6940c97f452e1b8:-349106523,e60d21e3c7e56a5073d609826e93d738:511090064</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin.gust</sys_created_by>
+        <sys_created_on>2025-05-22 15:22:17</sys_created_on>
+        <sys_db_object display_value="" name="sys_script_client">sys_script_client</sys_db_object>
+        <sys_id>10fe121755cd4192a754fe7fa6ac3ac9</sys_id>
+        <sys_metadata>60eceda393e56a507ff935277bba10ab</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>TestChatUI</sys_name>
+        <sys_package display_value="MFEC AI Utils GB" source="7efc99ef93e16a507ff935277bba10ee">7efc99ef93e16a507ff935277bba10ee</sys_package>
+        <sys_parent display_value="Incident">6aa0113e0da112104f349799ccc97355</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="MFEC AI Utils GB">7efc99ef93e16a507ff935277bba10ee</sys_scope>
+        <sys_scope_delete display_value="">1bdbe40bd52942b38d70bfdca1b89989</sys_scope_delete>
+        <sys_update_name>sys_script_client_60eceda393e56a507ff935277bba10ab</sys_update_name>
+        <sys_update_version display_value="sys_script_client_60eceda393e56a507ff935277bba10ab">266da12793e56a507ff935277bba10b9</sys_update_version>
+        <sys_updated_by>admin.gust</sys_updated_by>
+        <sys_updated_on>2025-05-22 15:22:17</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

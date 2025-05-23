@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_embedded_help_role">
+    <sys_embedded_help_role action="INSERT_OR_UPDATE">
+        <order>1000</order>
+        <role display_value="mf_ai.script_agent" name="mf_ai.script_agent">cbfc99ef93e16a507ff935277bba10f6</role>
+        <sys_class_name>sys_embedded_help_role</sys_class_name>
+        <sys_created_by>admin.gust</sys_created_by>
+        <sys_created_on>2025-05-22 14:09:10</sys_created_on>
+        <sys_id>0ffc99ef93e16a507ff935277bba10f9</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>cbfc99ef93e16a507ff935277bba10f6</sys_name>
+        <sys_package display_value="MFEC AI Utils GB" source="7efc99ef93e16a507ff935277bba10ee">7efc99ef93e16a507ff935277bba10ee</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="MFEC AI Utils GB">7efc99ef93e16a507ff935277bba10ee</sys_scope>
+        <sys_update_name>sys_embedded_help_role_0ffc99ef93e16a507ff935277bba10f9</sys_update_name>
+        <sys_updated_by>admin.gust</sys_updated_by>
+        <sys_updated_on>2025-05-22 14:09:10</sys_updated_on>
+    </sys_embedded_help_role>
+</record_update>

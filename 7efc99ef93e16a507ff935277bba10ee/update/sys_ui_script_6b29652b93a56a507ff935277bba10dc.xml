@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_script">
+    <sys_ui_script action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <description/>
+        <global>true</global>
+        <ignore_in_now_experience>false</ignore_in_now_experience>
+        <name>AddChatToMenuBar</name>
+        <script><![CDATA[injectCustomIcon = function(strIconId, strHtmlId, strHtmlTitle, strOnClick) {
+    try {
+        //is Next Experience UI loaded?
+        if (!(top.NOW && top.NOW.isPolarisWrapper === "true")) {
+            return;
+        }
+        //is the icon already injected?
+        if (typeof window.top.custom_icon_injected !== 'undefined') {
+            return;
+        }
+        var objElement = window.top.document;
+        //search for the DOM element for the icon bar
+        [
+            'macroponent-f51912f4c700201072b211d4d8c26010', 'shadowRoot',
+            'sn-polaris-layout', 'shadowRoot',
+            'sn-polaris-header', 'shadowRoot',
+            '.utility-menu'
+        ].forEach(function(strId) {
+            if (!objElement) {
+                return;
+            }
+
+            objElement = strId === 'shadowRoot' ? objElement.shadowRoot : objElement.querySelector(strId);
+        });
+
+        //inject HTML code for the custom icon
+        if (objElement) {
+            jQuery(objElement).prepend(
+                '<span role="button" tabindex="0" class="contextual-zone-button polaris-enabled" ' +
+                'id="' + strHtmlId + '" aria-label="' + strHtmlTitle + '" ' +
+                'onclick="' + strOnClick + '" ' +
+                'title="' + strHtmlTitle + '" ' +
+                'aria-describedby="contextual_zone_' + strHtmlId + '_button" ' +
+                'aria-expanded="false"' +
+                '>' +
+                '<now-icon class="contextual-zone-icon" icon="' + strIconId + '" dir="ltr"></now-icon>' +
+                '<now-tooltip ' +
+                'id="' + strHtmlId + '-tooltip" ' +
+                'aria-label="' + strHtmlTitle + '" ' +
+                'role="tooltip" dir="ltr" aria-hidden="true">' +
+                '</now-tooltip>' +
+                '</span>'
+            );
+
+            top.custom_icon_injected = true;
+        }
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+//after finished loading the page inject custom icon 
+if (typeof jQuery === 'function') {
+    jQuery(document).ready(
+        injectCustomIcon(
+            /* (1) ad the ID of the chosen icon */
+            'user-transfer-outline',
+            /* (2) HTML ID of the created icon */
+            'chat_mf_ai',
+            /* (3) text to display when hovering over the icon */
+            'Chat With MFEC AI Agent',
+            /* (4) performed action when clicking on the icon */
+            "window.open('/chat_ui.do', 'chatPopup', 'width=500,height=500,resizable=yes,scrollbars=yes')"
+        )
+    );
+}]]></script>
+        <script_name/>
+        <sys_class_name>sys_ui_script</sys_class_name>
+        <sys_created_by>admin.gust</sys_created_by>
+        <sys_created_on>2025-05-22 15:02:40</sys_created_on>
+        <sys_id>6b29652b93a56a507ff935277bba10dc</sys_id>
+        <sys_mod_count>21</sys_mod_count>
+        <sys_name>AddChatToMenuBar</sys_name>
+        <sys_package display_value="MFEC AI Utils GB" source="7efc99ef93e16a507ff935277bba10ee">7efc99ef93e16a507ff935277bba10ee</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="MFEC AI Utils GB">7efc99ef93e16a507ff935277bba10ee</sys_scope>
+        <sys_update_name>sys_ui_script_6b29652b93a56a507ff935277bba10dc</sys_update_name>
+        <sys_updated_by>admin.gust</sys_updated_by>
+        <sys_updated_on>2025-05-22 17:22:39</sys_updated_on>
+        <ui_type>0</ui_type>
+        <use_scoped_format>false</use_scoped_format>
+    </sys_ui_script>
+</record_update>
