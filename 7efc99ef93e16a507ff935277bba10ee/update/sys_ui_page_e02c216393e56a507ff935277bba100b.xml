@@ -113,6 +113,48 @@
                     width: 100%;
                 }
             }
+
+			/* loading css */
+			.typing-indicator {
+				display: inline-flex;
+				align-items: center;
+				gap: 4px;
+				padding: 8px 12px;
+				border-radius: 12px;
+				background-color: #f1f1f1;
+				color: #333;
+				font-size: 14px;
+			}
+
+			.typing-dot {
+				width: 6px;
+				height: 6px;
+				background-color: #888;
+				border-radius: 50%;
+				animation: blink 1.4s infinite both;
+			}
+
+			.typing-dot:nth-child(2) {
+				animation-delay: 0.2s;
+			}
+			.typing-dot:nth-child(3) {
+				animation-delay: 0.4s;
+			}
+
+			@keyframes blink {
+				0% {
+					opacity: 0.2;
+					transform: translateY(0);
+				}
+				20% {
+					opacity: 1;
+					transform: translateY(-2px);
+				}
+				100% {
+					opacity: 0.2;
+					transform: translateY(0);
+				}
+			}
         </style>
     </head>
 
@@ -162,19 +204,19 @@
             });
         }
 
-        function sendMsg() {
-            var msg = document.getElementById('msgInput').value.trim();
-            if (!msg) return;
-            appendMessage(msg, 'user');
-            saveMessage(msg, 'user');
-
-            document.getElementById('msgInput').value = "";
-
-            getBotReply(msg, function(botReply) {
-                appendMessage(botReply, 'bot');
-                saveMessage(botReply, 'bot');
-            });
-        }
+		function sendMsg() {
+			var msg = document.getElementById('msgInput').value.trim();
+			if (!msg) return;
+			appendMessage(msg, 'user');
+			saveMessage(msg, 'user');
+			document.getElementById('msgInput').value = "";
+			showTyping(); // แสดง typing dots
+			getBotReply(msg, function(botReply) {
+				removeTyping(); // ซ่อน typing dots
+				appendMessage(botReply, 'bot');
+				saveMessage(botReply, 'bot');
+			});
+		}
 
         function appendMessage(text, type) {
             var chat = document.getElementById('chatbox');
@@ -216,6 +258,30 @@
             ga.addParam('sysparm_session', sessionId);
             ga.getXML();
         }
+
+		// ฟังก์ชันแสดง Bubble "กำลังพิมพ์..."
+		function showTyping() {
+			var chat = document.getElementById('chatbox');
+			var typingDiv = document.createElement('div');
+			typingDiv.className = 'msg bot-msg';
+			typingDiv.id = 'typing-indicator';
+			typingDiv.innerHTML = `
+				<div class="typing-indicator">
+					<div class="typing-dot"></div>
+					<div class="typing-dot"></div>
+					<div class="typing-dot"></div>
+				</div>
+			`;
+			chat.appendChild(typingDiv);
+			chat.scrollTop = chat.scrollHeight;
+		}
+
+		function removeTyping() {
+			var typingDiv = document.getElementById('typing-indicator');
+			if (typingDiv) {
+				typingDiv.remove();
+			}
+		}
     </script>
     </html>
 </j:jelly>]]></html>
@@ -225,14 +291,14 @@
         <sys_created_by>admin.gust</sys_created_by>
         <sys_created_on>2025-05-22 15:16:05</sys_created_on>
         <sys_id>e02c216393e56a507ff935277bba100b</sys_id>
-        <sys_mod_count>37</sys_mod_count>
+        <sys_mod_count>39</sys_mod_count>
         <sys_name>chat_ui</sys_name>
         <sys_package display_value="MFEC AI Utils GB" source="7efc99ef93e16a507ff935277bba10ee">7efc99ef93e16a507ff935277bba10ee</sys_package>
         <sys_policy/>
         <sys_scope display_value="MFEC AI Utils GB">7efc99ef93e16a507ff935277bba10ee</sys_scope>
         <sys_update_name>sys_ui_page_e02c216393e56a507ff935277bba100b</sys_update_name>
         <sys_updated_by>admin.gust</sys_updated_by>
-        <sys_updated_on>2025-05-23 01:42:06</sys_updated_on>
+        <sys_updated_on>2025-05-28 08:23:08</sys_updated_on>
     </sys_ui_page>
     <sys_es_latest_script action="INSERT_OR_UPDATE">
         <id>e02c216393e56a507ff935277bba100b</id>
