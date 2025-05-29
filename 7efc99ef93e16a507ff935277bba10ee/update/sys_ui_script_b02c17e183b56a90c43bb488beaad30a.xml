@@ -7,6 +7,15 @@
         <name>AddFloatingChatIcon</name>
         <script><![CDATA[function injectChatIcon() {
     try {
+
+		//is Next Experience UI loaded?
+        if (!(top.NOW.isPolarisWrapper === "true")) {
+            return;
+        }
+        //is the icon already injected?
+        // if (typeof window.top.chat_icon_injected !== 'undefined') {
+        //     return;
+        // }
         // ไม่สร้างซ้ำ
         if (document.getElementById("sn-chat-icon")) return;
 
@@ -111,7 +120,7 @@
         var chatModal = modalDiv;
         var closeBtn = modalDiv.querySelector(".sn-close-btn");
         var chatIframe = modalDiv.querySelector("iframe");
-
+	
         // ฟังก์ชันเรียกฝั่ง iframe ให้ scroll ไปล่างสุด
         function scrollIframeChatToBottom() {
             if (chatIframe) {
@@ -143,6 +152,8 @@
                 chatModal.style.display = "none";
             }
         });
+	
+	// top.chat_icon_injected = true;
 
     } catch (e) {
         console.error(e);
@@ -150,22 +161,25 @@
 }
 
 //after finished loading the page inject custom icon
-if (typeof jQuery === 'function') {
-    jQuery(document).ready(injectChatIcon);
-}]]></script>
+
+
+
+      if (typeof jQuery === 'function') {
+		jQuery(document).ready(injectChatIcon);
+	}]]></script>
         <script_name/>
         <sys_class_name>sys_ui_script</sys_class_name>
         <sys_created_by>admin.gust</sys_created_by>
         <sys_created_on>2025-05-29 04:33:03</sys_created_on>
         <sys_id>b02c17e183b56a90c43bb488beaad30a</sys_id>
-        <sys_mod_count>22</sys_mod_count>
+        <sys_mod_count>46</sys_mod_count>
         <sys_name>AddFloatingChatIcon</sys_name>
         <sys_package display_value="MFEC AI Utils GB" source="7efc99ef93e16a507ff935277bba10ee">7efc99ef93e16a507ff935277bba10ee</sys_package>
         <sys_policy/>
         <sys_scope display_value="MFEC AI Utils GB">7efc99ef93e16a507ff935277bba10ee</sys_scope>
         <sys_update_name>sys_ui_script_b02c17e183b56a90c43bb488beaad30a</sys_update_name>
         <sys_updated_by>admin.gust</sys_updated_by>
-        <sys_updated_on>2025-05-29 06:40:23</sys_updated_on>
+        <sys_updated_on>2025-05-29 09:45:46</sys_updated_on>
         <ui_type>0</ui_type>
         <use_scoped_format>false</use_scoped_format>
     </sys_ui_script>
