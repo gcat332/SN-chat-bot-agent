@@ -16,35 +16,47 @@
                 height: 100%;
                 margin: 0;
                 padding: 0;
+                font-family: 'Segoe UI', 'Prompt', Arial, sans-serif;
+                background: #f3f6fb;
             }
 
             .chat-container {
                 display: flex;
                 flex-direction: column;
                 height: 100%;
-                padding: 16px;
+                /* min-height: 480px;
+                max-width: 420px; */
+                margin: auto;
+                padding: 10px 12px 10px 12px;
+                background: #fff;
+                border-radius: 10px;
+                box-shadow: 0 4px 24px rgba(50, 60, 90, 0.10), 0 1.5px 6px #eee;
             }
 
             #chatbox {
                 flex: 1;
                 min-height: 0;
-                background-color: #fff;
-                border: 1px solid #ddd;
-                border-radius: 8px;
-                padding: 10px;
+                background-color: #f5f7fa;
+                border: 1px solid #e2e6ea;
+                border-radius: 12px;
+                padding: 14px 14px;
                 overflow-y: auto;
-                box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
-                margin-bottom: 12px;
+                box-shadow: inset 0 1.5px 4px rgba(0, 0, 0, 0.03);
+                margin-bottom: 5px;
                 font-size: 14px;
-                line-height: 1.4;
+                line-height: 1.1;
+                transition: box-shadow 0.2s;
             }
 
             h2 {
                 margin-top: 0;
-                font-size: 20px;
-                color: #444;
-                border-bottom: 1px solid #ddd;
-                padding-bottom: 8px;
+                font-size: 21px;
+                color: #4B5768;
+                border-bottom: 1.2px solid #e0e0e0;
+                font-weight: 600;
+                padding-bottom: 10px;
+                padding-left: 6px;
+                letter-spacing: 0.02em;
             }
 
             .msg {
@@ -62,36 +74,65 @@
             }
 
             .bubble {
-                max-width: 70%;
-                padding: 8px 12px;
-                border-radius: 12px;
-                line-height: 1.4;
+                max-width: 80%;
+                min-width: 60px;
+                padding: 10px 14px;
+                border-radius: 16px;
+                margin-bottom: 2px;
+                font-size: 14px;
+                box-shadow: 0px 1.5px 6px rgba(120, 140, 160, 0.08);
+                /* word-break: break-word;
+                white-space: pre-line; */
+                overflow-wrap: break-word;
+            }
+
+            .bubble p,
+            .bubble li {
+                margin-top: 0;
+                margin-bottom: 0;
             }
 
             .user-bubble {
-                background-color: #d0ebff;
-                color: #004085;
+                background: linear-gradient(110deg, #33d2ff 0%, #478eff 70%);
+                color: #fff;
+                align-self: flex-end;
+                border-bottom-right-radius: 4px;
             }
 
             .bot-bubble {
-                background-color: #f1f1f1;
-                color: #333;
+                background: linear-gradient(110deg, #e5e8ed 0%, #f1f3f6 100%);
+                color: #324155;
+                border-bottom-left-radius: 4px;
+                align-self: flex-start;
             }
 
-            #msgInput {
-                width: calc(100% - 100px);
-                padding: 10px;
-                border: 1px solid #ccc;
-                border-radius: 6px;
-                font-size: 14px;
-                margin-right: 8px;
+            .bubble a,
+            .bot-bubble a {
+                color: #165bd9;
+                text-decoration: underline;
+                word-break: break-all;
+            }
+
+            .bubble a:hover {
+                text-decoration: none;
+            }
+
+            #msgInput,
+            button {
+                height: 40px;
+                /* ปรับเพิ่ม/ลดตามความชอบ */
                 box-sizing: border-box;
             }
 
+            #msgInput {
+                padding: 0 12px;
+                /* padding แนวนอน */
+            }
+
             button {
-                padding: 10px 16px;
-                background-color: #3276b1;
-                color: white;
+                padding: 0px 16px;
+                background: linear-gradient(90deg, #52d57a 0%, #33b77a 90%);
+                color: #fff;
                 border: none;
                 border-radius: 6px;
                 font-size: 14px;
@@ -99,8 +140,18 @@
                 transition: background-color 0.2s ease;
             }
 
-            button:hover {
-                background-color: #285e8e;
+            button:hover,
+            button:focus {
+                background: linear-gradient(90deg, #34bcfa 0%, #478eff 90%);
+            }
+
+            button#clearMsg {
+                background: linear-gradient(90deg, #e95454 0%, #ce1e1e 100%);
+                color: #fff;
+            }
+
+            button#clearMsg:hover {
+                background: linear-gradient(90deg, #c43232 0%, #a51515 100%);
             }
 
             @media (max-width: 480px) {
@@ -114,49 +165,58 @@
                 }
             }
 
-			/* loading css */
-			.typing-indicator {
-				display: inline-flex;
-				align-items: center;
-				gap: 4px;
-				padding: 8px 12px;
-				border-radius: 12px;
-				background-color: #f1f1f1;
-				color: #333;
-				font-size: 14px;
-			}
+            /* loading css */
+            .typing-indicator {
+                display: inline-flex;
+                align-items: center;
+                gap: 4px;
+                padding: 8px 12px;
+                border-radius: 12px;
+                background-color: #f1f1f1;
+                color: #333;
+                font-size: 14px;
+            }
 
-			.typing-dot {
-				width: 6px;
-				height: 6px;
-				background-color: #888;
-				border-radius: 50%;
-				animation: blink 1.4s infinite both;
-			}
+            .typing-dot {
+                width: 6px;
+                height: 6px;
+                background-color: #888;
+                border-radius: 50%;
+                animation: blink 1.4s infinite both;
+            }
 
-			.typing-dot:nth-child(2) {
-				animation-delay: 0.2s;
-			}
-			.typing-dot:nth-child(3) {
-				animation-delay: 0.4s;
-			}
+            .typing-dot:nth-child(2) {
+                animation-delay: 0.2s;
+            }
 
-			@keyframes blink {
-				0% {
-					opacity: 0.2;
-					transform: translateY(0);
-				}
-				20% {
-					opacity: 1;
-					transform: translateY(-2px);
-				}
-				100% {
-					opacity: 0.2;
-					transform: translateY(0);
-				}
-			}
+            .typing-dot:nth-child(3) {
+                animation-delay: 0.4s;
+            }
+
+            @keyframes blink {
+                0% {
+                    opacity: 0.2;
+                    transform: translateY(0);
+                }
+
+                20% {
+                    opacity: 1;
+                    transform: translateY(-2px);
+                }
+
+                100% {
+                    opacity: 0.2;
+                    transform: translateY(0);
+                }
+            }
+
+            #sn-chat-icon {
+                display: none !important;
+            }
         </style>
     </head>
+    <div id="sn-chat-icon">
+    </div>
 
     <body onload="loadChatHistory()">
         <div class="chat-container">
@@ -168,28 +228,25 @@
                 </div>
             </div>
 
-            <div style="display: flex; gap: 8px; align-items: center; margin-top: 10px;">
-                <input type="text" id="msgInput" placeholder="พิมพ์ข้อความ..." style="flex: 6; padding: 8px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px;" />
-                <button onclick="sendMsg()" style="flex: 2; padding: 8px; font-size: 14px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;">
-                    ส่ง
-                </button>
-                <button onclick="clearHistory()" style="flex: 2; padding: 8px; font-size: 14px; background-color: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer;">
-                    ล้าง
-                </button>
+            <div style="display: flex; gap: 8px; align-items: stretch; margin-top: 10px;">
+                <input type="text" id="msgInput" placeholder="พิมพ์ข้อความ..." style="flex: 6; font-size: 14px; border: 1px solid #ccc; border-radius: 4px;" />
+                <button onclick="sendMsg()" style="color:white;flex: 2; font-size: 14px; border-radius: 4px;">ส่ง</button>
+                <button id="clearMsg" onclick="clearHistory()" style="flex: 2; font-size: 14px; border-radius: 4px;">ล้าง</button>
             </div>
         </div>
+
     </body>
 
     <script>
         var userId = "${gs.getUserID()}";
-		var sessionId = "${gs.getSession().getSessionID()}";
+        var sessionId = "${gs.getSession().getSessionID()}";
 
-		document.getElementById('msgInput').addEventListener('keydown', function(event) {
-		if (event.key === 'Enter') {
-				event.preventDefault(); // ป้องกันการขึ้นบรรทัดใหม่
-				sendMsg(); // เรียกฟังก์ชันส่งข้อความ
-			}
-		});
+        document.getElementById('msgInput').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // ป้องกันการขึ้นบรรทัดใหม่
+                sendMsg(); // เรียกฟังก์ชันส่งข้อความ
+            }
+        });
 
         function loadChatHistory() {
             var ga = new GlideAjax('MF_AIUtils');
@@ -204,25 +261,25 @@
             });
         }
 
-		function sendMsg() {
-			var msg = document.getElementById('msgInput').value.trim();
-			if (!msg) return;
-			appendMessage(msg, 'user');
-			saveMessage(msg, 'user');
-			document.getElementById('msgInput').value = "";
-			showTyping(); // แสดง typing dots
-			getBotReply(msg, function(botReply) {
-				removeTyping(); // ซ่อน typing dots
-				appendMessage(botReply, 'bot');
-				saveMessage(botReply, 'bot');
-			});
-		}
+        function sendMsg() {
+            var msg = document.getElementById('msgInput').value.trim();
+            if (!msg) return;
+            appendMessage(msg, 'user');
+            saveMessage(msg, 'user');
+            document.getElementById('msgInput').value = "";
+            showTyping(); // แสดง typing dots
+            getBotReply(msg, function(botReply) {
+                removeTyping(); // ซ่อน typing dots
+                appendMessage(botReply, 'bot');
+                saveMessage(botReply, 'bot');
+            });
+        }
 
         function appendMessage(text, type) {
             var chat = document.getElementById('chatbox');
             var msgDiv = document.createElement('div');
             msgDiv.className = 'msg ' + (type === 'user' ? 'user-msg' : 'bot-msg');
-            msgDiv.innerHTML = '<div class="bubble ' + (type === 'user' ? 'user-bubble' : 'bot-bubble') + '">'+ text +
+            msgDiv.innerHTML = '<div class="bubble ' + (type === 'user' ? 'user-bubble' : 'bot-bubble') + '">' + text +
                 '</div>';
             chat.appendChild(msgDiv);
             chat.scrollTop = chat.scrollHeight;
@@ -234,7 +291,7 @@
             ga.addParam('sysparm_msg', text);
             ga.addParam('sysparm_type', type);
             ga.addParam('sysparm_session', sessionId);
-			ga.addParam('sysparm_user', userId);
+            ga.addParam('sysparm_user', userId);
             ga.getXML();
         }
 
@@ -259,30 +316,38 @@
             ga.getXML();
         }
 
-		// ฟังก์ชันแสดง Bubble "กำลังพิมพ์..."
-		function showTyping() {
-			var chat = document.getElementById('chatbox');
-			var typingDiv = document.createElement('div');
-			typingDiv.className = 'msg bot-msg';
-			typingDiv.id = 'typing-indicator';
-			typingDiv.innerHTML = `
+        // ฟังก์ชันแสดง Bubble "กำลังพิมพ์..."
+        function showTyping() {
+            var chat = document.getElementById('chatbox');
+            var typingDiv = document.createElement('div');
+            typingDiv.className = 'msg bot-msg';
+            typingDiv.id = 'typing-indicator';
+            typingDiv.innerHTML = `
 				<div class="typing-indicator">
 					<div class="typing-dot"></div>
 					<div class="typing-dot"></div>
 					<div class="typing-dot"></div>
 				</div>
 			`;
-			chat.appendChild(typingDiv);
-			chat.scrollTop = chat.scrollHeight;
-		}
+            chat.appendChild(typingDiv);
+            chat.scrollTop = chat.scrollHeight;
+        }
 
-		function removeTyping() {
-			var typingDiv = document.getElementById('typing-indicator');
-			if (typingDiv) {
-				typingDiv.remove();
-			}
-		}
+        function removeTyping() {
+            var typingDiv = document.getElementById('typing-indicator');
+            if (typingDiv) {
+                typingDiv.remove();
+            }
+        }
+
+        function scrollChatboxToBottom() {
+            var chatbox = document.getElementById('chatbox');
+            if (chatbox) {
+                chatbox.scrollTop = chatbox.scrollHeight;
+            }
+        }
     </script>
+
     </html>
 </j:jelly>]]></html>
         <name>chat_ui</name>
@@ -291,14 +356,14 @@
         <sys_created_by>admin.gust</sys_created_by>
         <sys_created_on>2025-05-22 15:16:05</sys_created_on>
         <sys_id>e02c216393e56a507ff935277bba100b</sys_id>
-        <sys_mod_count>39</sys_mod_count>
+        <sys_mod_count>79</sys_mod_count>
         <sys_name>chat_ui</sys_name>
         <sys_package display_value="MFEC AI Utils GB" source="7efc99ef93e16a507ff935277bba10ee">7efc99ef93e16a507ff935277bba10ee</sys_package>
         <sys_policy/>
         <sys_scope display_value="MFEC AI Utils GB">7efc99ef93e16a507ff935277bba10ee</sys_scope>
         <sys_update_name>sys_ui_page_e02c216393e56a507ff935277bba100b</sys_update_name>
         <sys_updated_by>admin.gust</sys_updated_by>
-        <sys_updated_on>2025-05-28 08:23:08</sys_updated_on>
+        <sys_updated_on>2025-05-29 06:54:50</sys_updated_on>
     </sys_ui_page>
     <sys_es_latest_script action="INSERT_OR_UPDATE">
         <id>e02c216393e56a507ff935277bba100b</id>

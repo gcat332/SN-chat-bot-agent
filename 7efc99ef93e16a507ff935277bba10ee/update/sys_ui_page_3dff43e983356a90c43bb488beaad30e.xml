@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_page">
+    <sys_ui_page action="INSERT_OR_UPDATE">
+        <category>cms</category>
+        <client_script/>
+        <description/>
+        <direct>false</direct>
+        <endpoint/>
+        <html><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+
+    <html>
+
+    <head>
+        <title>Chat On Top</title>
+        <style>
+            body {
+                font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+                margin: 0;
+                padding: 0;
+            }
+
+            #chat-icon {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                width: 60px;
+                height: 60px;
+                background-color: #0056b3;
+                border-radius: 50%;
+                color: white;
+                font-size: 28px;
+                text-align: center;
+                line-height: 60px;
+                cursor: pointer;
+                z-index: 9999;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+                transition: background-color 0.3s ease, transform 0.2s ease;
+            }
+
+            #chat-icon:hover {
+                background-color: #004494;
+                transform: scale(1.05);
+            }
+
+            #chat-modal {
+                display: none;
+                position: fixed;
+                bottom: 90px;
+                right: 20px;
+                width: 420px;
+                height: 600px;
+                background-color: #ffffff;
+                border-radius: 16px;
+                box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+                z-index: 9998;
+                overflow: hidden;
+                animation: fadeInUp 0.3s ease-out;
+                border: 1px solid #cdd6e0;
+            }
+
+            .close-btn {
+                position: absolute;
+                top: 10px;
+                right: 14px;
+                font-size: 20px;
+                color: #888;
+                cursor: pointer;
+                z-index: 2;
+                transition: color 0.2s ease;
+            }
+
+            .close-btn:hover {
+                color: #333;
+            }
+
+            iframe {
+                width: 100%;
+                height: 100%;
+                border: none;
+            }
+
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            @media (max-width: 500px) {
+                #chat-modal {
+                    width: 90%;
+                    height: 80%;
+                    bottom: 80px;
+                    right: 5%;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <!-- Floating Chat Icon -->
+        <div id="chat-icon" title="Open Chat">]]>💬<![CDATA[</div>
+        <!-- Modal with iframe -->
+        <div id="chat-modal">
+            <div class="close-btn" title="Close">✖</div>
+            <iframe src="/chat_ui.do"></iframe>
+        </div>
+        <script>
+            const chatIcon = document.getElementById("chat-icon");
+            const chatModal = document.getElementById("chat-modal");
+            const closeBtn = document.querySelector(".close-btn");
+            const chatIframe = chatModal.querySelector("iframe");
+
+            // ฟังก์ชันเรียกฝั่ง iframe ให้ scroll ไปล่างสุด
+            function scrollIframeChatToBottom() {
+                if (chatIframe) {
+                    try {
+                        chatIframe.contentWindow.scrollChatboxToBottom();
+                    } catch (e) {
+                        // ถ้า cross domain จะ error
+                    }
+                }
+            }
+            // toggle เปิด/ปิด modal ถ้ากด icon
+            function toggleChatModal() {
+                if (chatModal.style.display === "block") {
+                    chatModal.style.display = "none";
+                } else {
+                    chatModal.style.display = "block";
+                    // เรียก scroll ใน iframe (ถ้าทำได้)
+                    setTimeout(scrollIframeChatToBottom, 350); // รอ modal แสดงผล + iframe ready
+                }
+            }
+            chatIcon.addEventListener("click", toggleChatModal);
+            closeBtn.addEventListener("click", () => {
+                chatModal.style.display = "none";
+            });
+            // ปิดเมื่อกด ESC
+            document.addEventListener("keydown", function(event) {
+                if (event.key === "Escape") {
+                    chatModal.style.display = "none";
+                }
+            });
+        </script>
+    </body>
+
+    </html>
+</j:jelly>]]></html>
+        <name>chat_icon_ui</name>
+        <processing_script/>
+        <sys_class_name>sys_ui_page</sys_class_name>
+        <sys_created_by>admin.gust</sys_created_by>
+        <sys_created_on>2025-05-29 03:39:56</sys_created_on>
+        <sys_id>3dff43e983356a90c43bb488beaad30e</sys_id>
+        <sys_mod_count>17</sys_mod_count>
+        <sys_name>chat_icon_ui</sys_name>
+        <sys_package display_value="MFEC AI Utils GB" source="7efc99ef93e16a507ff935277bba10ee">7efc99ef93e16a507ff935277bba10ee</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="MFEC AI Utils GB">7efc99ef93e16a507ff935277bba10ee</sys_scope>
+        <sys_update_name>sys_ui_page_3dff43e983356a90c43bb488beaad30e</sys_update_name>
+        <sys_updated_by>admin.gust</sys_updated_by>
+        <sys_updated_on>2025-05-29 04:26:49</sys_updated_on>
+    </sys_ui_page>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>3dff43e983356a90c43bb488beaad30e</id>
+        <sys_created_by>admin.gust</sys_created_by>
+        <sys_created_on>2025-05-29 03:39:56</sys_created_on>
+        <sys_id>0a1013e983356a90c43bb488beaad3ec</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin.gust</sys_updated_by>
+        <sys_updated_on>2025-05-29 03:39:56</sys_updated_on>
+        <table>sys_ui_page</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

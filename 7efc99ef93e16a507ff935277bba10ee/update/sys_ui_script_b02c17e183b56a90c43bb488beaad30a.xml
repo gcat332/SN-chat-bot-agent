@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_script">
+    <sys_ui_script action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <description/>
+        <global>true</global>
+        <ignore_in_now_experience>false</ignore_in_now_experience>
+        <name>AddFloatingChatIcon</name>
+        <script><![CDATA[function injectChatIcon() {
+    try {
+        // ไม่สร้างซ้ำ
+        if (document.getElementById("sn-chat-icon")) return;
+
+        // --- สร้าง CSS
+        var style = document.createElement("style");
+        style.textContent = `
+    #sn-chat-icon {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      background-color: #0056b3;
+      border-radius: 50%;
+      color: white;
+      font-size: 28px;
+      text-align: center;
+      line-height: 60px;
+      cursor: pointer;
+      z-index: 9999;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.3s, transform 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #sn-chat-icon:hover {
+      background-color: #004494;
+      transform: scale(1.05);
+    }
+    #sn-chat-modal {
+      display: none;
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      width: 420px;
+      height: 630px;
+      background-color: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+      z-index: 9998;
+      overflow: hidden;
+      animation: fadeInUp 0.3s ease-out;
+      border: 1px solid #cdd6e0;
+      transition: display 0.2s;
+    }
+    .sn-close-btn {
+      position: absolute;
+      top: 11px;
+      right: 14px;
+      font-size: 15px;
+      color: #888;
+      cursor: pointer;
+    }
+    .sn-close-btn:hover {
+      color: #333;
+    }
+    #sn-chat-modal iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: transparent;
+    }
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @media (max-width: 500px) {
+      #sn-chat-modal {
+        width: 90vw;
+        height: 80vh;
+        bottom: 80px;
+        right: 5vw;
+      }
+    }
+  `;
+        document.head.appendChild(style);
+
+        // --- HTML: icon + modal
+        var iconDiv = document.createElement("div");
+        iconDiv.id = "sn-chat-icon";
+        iconDiv.title = "Open Chat";
+        iconDiv.innerHTML = "]]>💬<![CDATA[";
+        document.body.appendChild(iconDiv);
+
+        var modalDiv = document.createElement("div");
+        modalDiv.id = "sn-chat-modal";
+        modalDiv.innerHTML = `
+    <button class="sn-close-btn" title="Close">&times;</button>
+    <iframe src="/chat_ui.do"></iframe>
+  `;
+        document.body.appendChild(modalDiv);
+
+        // --- event & function
+        var chatIcon = iconDiv;
+        var chatModal = modalDiv;
+        var closeBtn = modalDiv.querySelector(".sn-close-btn");
+        var chatIframe = modalDiv.querySelector("iframe");
+
+        // ฟังก์ชันเรียกฝั่ง iframe ให้ scroll ไปล่างสุด
+        function scrollIframeChatToBottom() {
+            if (chatIframe) {
+                try {
+                    chatIframe.contentWindow.scrollChatboxToBottom(); // function นี้ควรมีใน chat_ui.do
+                } catch (e) {
+                    // ถ้า cross domain จะ error
+                }
+            }
+        }
+
+        // toggle เปิด/ปิด modal ถ้ากด icon
+        function toggleChatModal() {
+            if (chatModal.style.display === "block") {
+                chatModal.style.display = "none";
+            } else {
+                chatModal.style.display = "block";
+                setTimeout(scrollIframeChatToBottom, 350); // รอ modal & iframe ready
+            }
+        }
+
+        chatIcon.addEventListener("click", toggleChatModal);
+        closeBtn.addEventListener("click", () => {
+            chatModal.style.display = "none";
+        });
+        // ปิดเมื่อกด ESC
+        document.addEventListener("keydown", function(event) {
+            if (event.key === "Escape") {
+                chatModal.style.display = "none";
+            }
+        });
+
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+//after finished loading the page inject custom icon
+if (typeof jQuery === 'function') {
+    jQuery(document).ready(injectChatIcon);
+}]]></script>
+        <script_name/>
+        <sys_class_name>sys_ui_script</sys_class_name>
+        <sys_created_by>admin.gust</sys_created_by>
+        <sys_created_on>2025-05-29 04:33:03</sys_created_on>
+        <sys_id>b02c17e183b56a90c43bb488beaad30a</sys_id>
+        <sys_mod_count>22</sys_mod_count>
+        <sys_name>AddFloatingChatIcon</sys_name>
+        <sys_package display_value="MFEC AI Utils GB" source="7efc99ef93e16a507ff935277bba10ee">7efc99ef93e16a507ff935277bba10ee</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="MFEC AI Utils GB">7efc99ef93e16a507ff935277bba10ee</sys_scope>
+        <sys_update_name>sys_ui_script_b02c17e183b56a90c43bb488beaad30a</sys_update_name>
+        <sys_updated_by>admin.gust</sys_updated_by>
+        <sys_updated_on>2025-05-29 06:40:23</sys_updated_on>
+        <ui_type>0</ui_type>
+        <use_scoped_format>false</use_scoped_format>
+    </sys_ui_script>
+</record_update>
