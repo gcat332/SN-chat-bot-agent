@@ -2,4 +2,5 @@ sn-chat-icon
 ===============================================
 Chat_icon
 
-Component Authors, provide some documentation for your users here!
+This module is add chat ui to Workspace UI for open iframe with UI_page which contain chat application.
+** This module is designed for ServiceNow Yokohama version.
