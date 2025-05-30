@@ -110,7 +110,3 @@ Ping **แมวไทย** 🐈 or open an issue on GitHub.
 PRs welcome, bugs feared, icons loved.
 
 ---
-
-## 📋 License
-
-MIT (or your team's policy)
