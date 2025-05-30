@@ -1,0 +1,15 @@
+{
+  "components": {
+    "mfec3-sn-chat-icon": {
+      "innerComponents": [],
+      "uiBuilder": {
+        "associatedTypes": ["global.core", "global.landing-page"],
+        "label": "Chat UI",
+        "tileIcon": "./tile-icon/generic-tile-icon.svg",
+        "description": "Open chat UI",
+        "category": "primitives"
+      }
+    }
+  },
+  "scopeName": "x_mfec3_mfec_ai_0"
+}
