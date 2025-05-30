@@ -48,9 +48,10 @@
                 transition: box-shadow 0.2s;
             }
 
-            h2 {
+            h3 {
+				justify-content: center;
                 margin-top: 0;
-                font-size: 21px;
+                font-size: 18px;
                 color: #4B5768;
                 border-bottom: 1.2px solid #e0e0e0;
                 font-weight: 600;
@@ -154,6 +155,37 @@
                 background: linear-gradient(90deg, #c43232 0%, #a51515 100%);
             }
 
+            .model-select-wrapper {
+                justify-content: center;
+                display: flex;
+                align-items: center;
+                margin-bottom: 12px;
+            }
+
+            model-select-wrapper {
+                justify-content: center;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            #modelSelect {
+                font-size: 14px;
+				text-align: center;
+                border: 1px solid #ccc;
+                border-radius: 8px;
+                background: #fff;
+                max-width: 220px;
+                box-shadow: 0 2px 3px rgba(0, 0, 0, 0.05);
+                transition: border 0.2s ease, box-shadow 0.2s ease;
+            }
+
+            #modelSelect:focus {
+                outline: none;
+                border-color: #478eff;
+                box-shadow: 0 0 0 2px rgba(71, 142, 255, 0.2);
+            }
+
             @media (max-width: 480px) {
                 #msgInput {
                     width: 100%;
@@ -220,8 +252,16 @@
 
     <body onload="loadChatHistory()">
         <div class="chat-container">
-            <h2>]]>💬<![CDATA[ Chat With MFEC AI Agent</h2>
-
+			
+            <h3>]]>💬<![CDATA[ MFEC AI Agent</h3>
+            <div class="model-select-wrapper">
+                <select id="modelSelect" title="เลือก AI Model">
+                    <option value="mfecgpt">MFEC GPT(4.1)</option>
+                    <option value="tlskai">TalentSeeker.AI</option>
+                    <option value="itspai">ITSupport.AI</option>
+					<option value="nhsoai">NSHO.AI</option>
+                </select>
+            </div>
             <div id="chatbox">
                 <div class="msg bot-msg">
                     <div class="bubble bot-bubble">เริ่มแชทที่นี่...</div>
@@ -276,14 +316,19 @@
         }
 
         function appendMessage(text, type) {
-            var chat = document.getElementById('chatbox');
-            var msgDiv = document.createElement('div');
-            msgDiv.className = 'msg ' + (type === 'user' ? 'user-msg' : 'bot-msg');
-            msgDiv.innerHTML = '<div class="bubble ' + (type === 'user' ? 'user-bubble' : 'bot-bubble') + '">' + text +
-                '</div>';
-            chat.appendChild(msgDiv);
-            chat.scrollTop = chat.scrollHeight;
-        }
+    var chat = document.getElementById('chatbox');
+    var msgDiv = document.createElement('div');
+    msgDiv.className = 'msg ' + (type === 'user' ? 'user-msg' : 'bot-msg');
+
+    if (type === 'bot') {
+        msgDiv.innerHTML = '<div style="font-size: 12px; color: #888; margin-left: 4px; margin-bottom: 2px;">]]>🤖<![CDATA[</div><div class="bubble bot-bubble">'+text+'</div>';
+    } else {
+        msgDiv.innerHTML = '<div style="font-size: 12px; color: #888; margin-left: 4px; margin-bottom: 2px;">]]>👨🏻<![CDATA[</div><div class="bubble user-bubble">' + text + '</div>';
+    }
+
+    chat.appendChild(msgDiv);
+    chat.scrollTop = chat.scrollHeight;
+}
 
         function saveMessage(text, type) {
             var ga = new GlideAjax('MF_AIUtils');
@@ -297,12 +342,14 @@
 
         // ฟังก์ชันใหม่: รับข้อความผู้ใช้ + callback เมื่อได้คำตอบจาก GlideAjax
         function getBotReply(msg, callback) {
-            var ga = new GlideAjax('MF_AIUtils'); // ใช้ชื่อ Script Include ที่คุณสร้างไว้
+			var model = modelSelect.value.toString();
+            var ga = new GlideAjax('MF_AIUtils');
             ga.addParam('sysparm_name', 'getAIanswer');
             ga.addParam('sysparm_ques', msg);
+            ga.addParam('sysparm_aimodel', model); // เพิ่ม model ที่เลือก
             ga.getXML(function(response) {
                 var answer = response.responseXML.documentElement.getAttribute("answer");
-                callback(answer); // เรียก callback พร้อมคำตอบ
+                callback(answer);
             });
         }
 
@@ -356,14 +403,14 @@
         <sys_created_by>admin.gust</sys_created_by>
         <sys_created_on>2025-05-22 15:16:05</sys_created_on>
         <sys_id>e02c216393e56a507ff935277bba100b</sys_id>
-        <sys_mod_count>79</sys_mod_count>
+        <sys_mod_count>122</sys_mod_count>
         <sys_name>chat_ui</sys_name>
         <sys_package display_value="MFEC AI Utils GB" source="7efc99ef93e16a507ff935277bba10ee">7efc99ef93e16a507ff935277bba10ee</sys_package>
         <sys_policy/>
         <sys_scope display_value="MFEC AI Utils GB">7efc99ef93e16a507ff935277bba10ee</sys_scope>
         <sys_update_name>sys_ui_page_e02c216393e56a507ff935277bba100b</sys_update_name>
         <sys_updated_by>admin.gust</sys_updated_by>
-        <sys_updated_on>2025-05-29 06:54:50</sys_updated_on>
+        <sys_updated_on>2025-05-30 06:41:10</sys_updated_on>
     </sys_ui_page>
     <sys_es_latest_script action="INSERT_OR_UPDATE">
         <id>e02c216393e56a507ff935277bba100b</id>

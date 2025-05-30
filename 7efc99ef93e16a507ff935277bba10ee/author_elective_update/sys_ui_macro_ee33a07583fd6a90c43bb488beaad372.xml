@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_macro">
+    <sys_ui_macro action="DELETE">
+        <active>true</active>
+        <category>general</category>
+        <description/>
+        <media_type/>
+        <name>chat_icon_macro</name>
+        <scoped_name/>
+        <sys_class_name>sys_ui_macro</sys_class_name>
+        <sys_created_by>admin.gust</sys_created_by>
+        <sys_created_on>2025-05-29 09:43:27</sys_created_on>
+        <sys_id>ee33a07583fd6a90c43bb488beaad372</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>chat_icon_macro</sys_name>
+        <sys_package display_value="MFEC AI Utils GB" source="7efc99ef93e16a507ff935277bba10ee">7efc99ef93e16a507ff935277bba10ee</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="MFEC AI Utils GB">7efc99ef93e16a507ff935277bba10ee</sys_scope>
+        <sys_update_name>sys_ui_macro_ee33a07583fd6a90c43bb488beaad372</sys_update_name>
+        <sys_updated_by>admin.gust</sys_updated_by>
+        <sys_updated_on>2025-05-29 09:55:46</sys_updated_on>
+        <xml><![CDATA[<j:jelly xmlns:j="jelly:core" xmlns:g="glide" trim="false">
+  <script>
+    console.log("✅ Macro chat_icon_macro loaded!");
+  </script>
+  <div style="position: fixed; bottom: 10px; right: 10px; z-index: 9999; background: yellow; padding: 4px;">
+    Macro Visible
+  </div>
+</j:jelly>]]></xml>
+    </sys_ui_macro>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="MFEC AI Utils GB">7efc99ef93e16a507ff935277bba10ee</application>
+        <file_path/>
+        <instance_id>114ad8d7dba6af4007072f17d496193e</instance_id>
+        <instance_name>mfecplcdemo2</instance_name>
+        <name>sys_ui_macro_ee33a07583fd6a90c43bb488beaad372</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sys_ui_macro"&gt;&lt;sys_ui_macro action="INSERT_OR_UPDATE"&gt;&lt;active&gt;true&lt;/active&gt;&lt;category&gt;general&lt;/category&gt;&lt;description/&gt;&lt;media_type/&gt;&lt;name&gt;chat_icon_macro&lt;/name&gt;&lt;scoped_name/&gt;&lt;sys_class_name&gt;sys_ui_macro&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin.gust&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2025-05-29 09:43:27&lt;/sys_created_on&gt;&lt;sys_id&gt;ee33a07583fd6a90c43bb488beaad372&lt;/sys_id&gt;&lt;sys_mod_count&gt;3&lt;/sys_mod_count&gt;&lt;sys_name&gt;chat_icon_macro&lt;/sys_name&gt;&lt;sys_package display_value="MFEC AI Utils GB" source="7efc99ef93e16a507ff935277bba10ee"&gt;7efc99ef93e16a507ff935277bba10ee&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="MFEC AI Utils GB"&gt;7efc99ef93e16a507ff935277bba10ee&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_ui_macro_ee33a07583fd6a90c43bb488beaad372&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin.gust&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2025-05-29 09:55:46&lt;/sys_updated_on&gt;&lt;xml&gt;&lt;![CDATA[&lt;j:jelly xmlns:j="jelly:core" xmlns:g="glide" trim="false"&gt;
+  &lt;script&gt;
+    console.log("✅ Macro chat_icon_macro loaded!");
+  &lt;/script&gt;
+  &lt;div style="position: fixed; bottom: 10px; right: 10px; z-index: 9999; background: yellow; padding: 4px;"&gt;
+    Macro Visible
+  &lt;/div&gt;
+&lt;/j:jelly&gt;]]&gt;&lt;/xml&gt;&lt;/sys_ui_macro&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>75890577</payload_hash>
+        <record_name>chat_icon_macro</record_name>
+        <reverted_from/>
+        <source>241c2d2393e56a507ff935277bba1093</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin.gust</sys_created_by>
+        <sys_created_on>2025-05-29 09:55:46</sys_created_on>
+        <sys_id>eb16a8f983fd6a90c43bb488beaad338</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1971b78207e0000001</sys_recorded_at>
+        <sys_updated_by>admin.gust</sys_updated_by>
+        <sys_updated_on>2025-05-29 09:55:46</sys_updated_on>
+        <type>Macro</type>
+        <update_guid>ef16a8f93bfd6a90e06aafc6f36c8437</update_guid>
+        <update_guid_history>ef16a8f93bfd6a90e06aafc6f36c8437:75890577,5345ac3997fd6a90d6e62599557ab3fe:2014226751,31156c399efd6a900f454c2726e18279:1161966470,8b43a075a1fd6a90e5d078f19cee03d2:-1075538644</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin.gust</sys_created_by>
+        <sys_created_on>2025-05-29 09:56:54</sys_created_on>
+        <sys_db_object display_value="" name="sys_ui_macro">sys_ui_macro</sys_db_object>
+        <sys_id>53de6ed5221d40b891b00b3aab385240</sys_id>
+        <sys_metadata>ee33a07583fd6a90c43bb488beaad372</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>chat_icon_macro</sys_name>
+        <sys_package display_value="MFEC AI Utils GB" source="7efc99ef93e16a507ff935277bba10ee">7efc99ef93e16a507ff935277bba10ee</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="MFEC AI Utils GB">7efc99ef93e16a507ff935277bba10ee</sys_scope>
+        <sys_scope_delete display_value="">1bdbe40bd52942b38d70bfdca1b89989</sys_scope_delete>
+        <sys_update_name>sys_ui_macro_ee33a07583fd6a90c43bb488beaad372</sys_update_name>
+        <sys_update_version display_value="sys_ui_macro_ee33a07583fd6a90c43bb488beaad372">eb16a8f983fd6a90c43bb488beaad338</sys_update_version>
+        <sys_updated_by>admin.gust</sys_updated_by>
+        <sys_updated_on>2025-05-29 09:56:54</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>
