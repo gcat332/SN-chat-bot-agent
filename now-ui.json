@@ -4,10 +4,10 @@
       "innerComponents": [],
       "uiBuilder": {
         "associatedTypes": ["global.core", "global.landing-page"],
-        "label": "Chat UI",
+        "label": "[MFEC]Chat AI agent",
         "tileIcon": "./tile-icon/mfec.svg",
-        "description": "Open chat UI",
-        "category": "primitives"
+        "description": "Chat AI Agent UI",
+        "category": "MFEC customizations"
       }
     }
   },
