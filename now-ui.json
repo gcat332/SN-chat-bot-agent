@@ -5,7 +5,7 @@
       "uiBuilder": {
         "associatedTypes": ["global.core", "global.landing-page"],
         "label": "[MFEC] Chat AI agent",
-        "tileIcon": "./tile-icon/mfec.svg",
+        "tileIcon": "./tile-icon/generic-tile-icon.svg",
         "description": "Chat AI Agent UI",
         "category": "MFEC customizations"
       }
