@@ -9,16 +9,17 @@ const view = (state, { updateState }) => {
 
 	return (
 		<div>
-			<div id="sn-chat-icon" title="Open Chat" onclick={toggleModal}>
+			<div
+				id="sn-chat-icon"
+				title="Chat AI Agent (Shift+C)"
+				onclick={toggleModal}
+			>
 				💬
 			</div>
 
 			{state.showModal && (
 				<div id="sn-chat-modal">
-					<div className="sn-close-btn" onclick={toggleModal}>
-						✖
-					</div>
-					<iframe src="/chat_ui.do" title="Chat UI" />
+					<iframe src="/chat_ui.do" title="Chat AI Agent" scrolling="no" />
 				</div>
 			)}
 		</div>
@@ -32,23 +33,4 @@ createCustomElement("mfec3-sn-chat-icon", {
 		showModal: false,
 	},
 	styles,
-	connectedCallback(element, stateManager) {
-		const onKeyDown = (e) => {
-			if (e.key === "Escape" || e.key === "Esc") {
-				stateManager.updateState({ showModal: false });
-			}
-		};
-
-		// Attach to document keydown
-		document.addEventListener("keydown", onKeyDown);
-
-		// Save listener ref so we can remove it later
-		element._onKeyDown = onKeyDown;
-	},
-
-	disconnectedCallback(element) {
-		if (element._onKeyDown) {
-			document.removeEventListener("keydown", element._onKeyDown);
-		}
-	},
 });

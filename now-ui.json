@@ -5,7 +5,7 @@
       "uiBuilder": {
         "associatedTypes": ["global.core", "global.landing-page"],
         "label": "Chat UI",
-        "tileIcon": "./tile-icon/generic-tile-icon.svg",
+        "tileIcon": "./tile-icon/mfec.svg",
         "description": "Open chat UI",
         "category": "primitives"
       }

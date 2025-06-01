@@ -29,7 +29,6 @@
 }
 
 #sn-chat-modal {
-    display: block; // จะถูกเปิด/ปิดผ่าน React แทน ไม่ต้องใช้ `display: none` ที่นี่
     position: fixed;
     bottom: 90px;
     right: 20px;
@@ -40,22 +39,8 @@
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
     z-index: 9998;
     overflow: hidden;
-    animation: fadeInUp 0.3s ease-out;
     border: 1px solid #cdd6e0;
-    transition: display 0.2s;
-}
-
-.sn-close-btn {
-    position: absolute;
-    top: 11px;
-    right: 14px;
-    font-size: 15px;
-    color: #888;
-    cursor: pointer;
-}
-
-.sn-close-btn:hover {
-    color: #333;
+    animation: fadeInUp 0.3s ease-out;
 }
 
 #sn-chat-modal iframe {
@@ -63,6 +48,8 @@
     height: 100%;
     border: none;
     background: transparent;
+    overflow: hidden;
+    scrollbar-width: none;
 }
 
 @keyframes fadeInUp {
