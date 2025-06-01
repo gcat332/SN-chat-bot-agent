@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_script">
+    <sys_ui_script action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <description>01/06/2025 : Fix UX/UI bug, add shotcut to trigger modal (shift+c)</description>
+        <global>true</global>
+        <ignore_in_now_experience>false</ignore_in_now_experience>
+        <name>AddFloatingChatIconWOCloseButton</name>
+        <script><![CDATA[function injectChatIcon() {
+  try {
+    if (!(top.NOW.isPolarisWrapper === "true")) return;
+    if (document.getElementById("sn-chat-icon")) return;
+
+    // --- สร้าง CSS
+    const style = document.createElement("style");
+    style.textContent = `
+      #sn-chat-icon {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 60px;
+        height: 60px;
+        background-color: #0056b3;
+        border-radius: 50%;
+        color: white;
+        font-size: 28px;
+        text-align: center;
+        line-height: 60px;
+        cursor: pointer;
+        z-index: 9999;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        transition: background-color 0.3s, transform 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #sn-chat-icon:hover {
+        background-color: #004494;
+        transform: scale(1.05);
+      }
+
+      #sn-chat-modal {
+        display: none;
+        position: fixed;
+        bottom: 90px;
+        right: 20px;
+        width: 420px;
+        height: 650px;
+        background-color: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+        z-index: 9998;
+        overflow: hidden;
+        animation: fadeInUp 0.3s ease-out;
+        border: 1px solid #cdd6e0;
+        transition: display 0.2s;
+      }
+
+      #sn-chat-modal iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+        background: transparent;
+        overflow: hidden;
+        scrollbar-width: none;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 500px) {
+        #sn-chat-modal {
+          width: 90vw;
+          height: 80vh;
+          bottom: 80px;
+          right: 5vw;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+
+    // --- HTML ส่วนไอคอนกับ modal
+    const iconDiv = document.createElement("div");
+    iconDiv.id = "sn-chat-icon";
+    iconDiv.title = "Chat AI Agent (shift+c)";
+    iconDiv.innerHTML = "]]>💬<![CDATA[";
+    document.body.appendChild(iconDiv);
+
+    const modalDiv = document.createElement("div");
+    modalDiv.id = "sn-chat-modal";
+    modalDiv.innerHTML = `<iframe src="/chat_ui.do"></iframe>`;
+    document.body.appendChild(modalDiv);
+
+    const chatModal = modalDiv;
+    const chatIcon = iconDiv;
+    const chatIframe = modalDiv.querySelector("iframe");
+	
+    function scrollIframeChatToBottom() {
+      if (chatIframe) {
+        try {
+          chatIframe.contentWindow.scrollChatboxToBottom();
+        } catch (e) {
+          // Cross domain ก็ปล่อยผ่าน
+        }
+      }
+    }
+
+    function toggleChatModal() {
+      const isVisible = chatModal.style.display === "block";
+      chatModal.style.display = isVisible ? "none" : "block";
+      if (!isVisible) {
+        setTimeout(scrollIframeChatToBottom, 350);
+      }
+    }
+
+    // Event listeners
+    chatIcon.addEventListener("click", toggleChatModal);
+
+    document.addEventListener("keydown", function (event) {
+      // ESC ซ่อนเท่านั้น
+      if (event.key === "Escape") {
+        chatModal.style.display = "none";
+      }
+      // Shift + C toggle
+      if (event.shiftKey && event.key.toLowerCase() === "c") {
+        toggleChatModal();
+      }
+    });
+
+  } catch (e) {
+    console.error("Chat Icon Error:", e);
+  }
+}
+
+// inject เมื่อหน้าโหลดเสร็จ
+if (typeof jQuery === "function") {
+  jQuery(document).ready(injectChatIcon);
+}]]></script>
+        <script_name/>
+        <sys_class_name>sys_ui_script</sys_class_name>
+        <sys_created_by>admin.gust</sys_created_by>
+        <sys_created_on>2025-06-01 07:10:07</sys_created_on>
+        <sys_id>92fcd3e283712610c43bb488beaad34e</sys_id>
+        <sys_mod_count>13</sys_mod_count>
+        <sys_name>AddFloatingChatIconWOCloseButton</sys_name>
+        <sys_package display_value="MFEC AI Utils GB" source="7efc99ef93e16a507ff935277bba10ee">7efc99ef93e16a507ff935277bba10ee</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="MFEC AI Utils GB">7efc99ef93e16a507ff935277bba10ee</sys_scope>
+        <sys_update_name>sys_ui_script_92fcd3e283712610c43bb488beaad34e</sys_update_name>
+        <sys_updated_by>admin.gust</sys_updated_by>
+        <sys_updated_on>2025-06-01 07:41:13</sys_updated_on>
+        <ui_type>0</ui_type>
+        <use_scoped_format>false</use_scoped_format>
+    </sys_ui_script>
+</record_update>

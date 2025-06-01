@@ -2,7 +2,10 @@
     <sys_ui_page action="INSERT_OR_UPDATE">
         <category>cms</category>
         <client_script/>
-        <description/>
+        <description>01/06/2025 : enchanced UX/UI, add function to summary to record field&#13;
+31/05/2025 : add function for auto summary records (autoSumRecord) when open chat_ui in record workspace&#13;
+30/05/2025 : add function to select AI model&#13;
+28/05/2025 : update to use mfec_gpt (https://mfec-ai-agent-29849930840.asia-southeast1.run.app/agent_mfecgpt)</description>
         <direct>false</direct>
         <endpoint/>
         <html><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
@@ -33,6 +36,10 @@
                 box-shadow: 0 4px 24px rgba(50, 60, 90, 0.10), 0 1.5px 6px #eee;
             }
 
+            #chatbox::-webkit-scrollbar {
+                display: none;
+            }
+
             #chatbox {
                 flex: 1;
                 min-height: 0;
@@ -46,15 +53,18 @@
                 font-size: 14px;
                 line-height: 1.1;
                 transition: box-shadow 0.2s;
+                scrollbar-width: none;
+                /* Firefox */
+                -ms-overflow-style: none;
+                /* IE 10+ */
             }
 
-            h3 {
-				justify-content: center;
+            .header {
+                justify-content: center;
                 margin-top: 0;
-                font-size: 18px;
+                font-size: 1.25rem;
                 color: #4B5768;
                 border-bottom: 1.2px solid #e0e0e0;
-                font-weight: 600;
                 padding-bottom: 10px;
                 padding-left: 6px;
                 letter-spacing: 0.02em;
@@ -155,29 +165,27 @@
                 background: linear-gradient(90deg, #c43232 0%, #a51515 100%);
             }
 
-            .model-select-wrapper {
-                justify-content: center;
-                display: flex;
-                align-items: center;
-                margin-bottom: 12px;
-            }
-
-            model-select-wrapper {
-                justify-content: center;
-                display: flex;
-                align-items: center;
-                gap: 10px;
-            }
-
-            #modelSelect {
-                font-size: 14px;
-				text-align: center;
+            select#modelSelect {
+                padding: 6px 12px;
                 border: 1px solid #ccc;
                 border-radius: 8px;
-                background: #fff;
-                max-width: 220px;
-                box-shadow: 0 2px 3px rgba(0, 0, 0, 0.05);
-                transition: border 0.2s ease, box-shadow 0.2s ease;
+                font-size: 14px;
+                background-color: #f9f9f9;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+                appearance: none;
+                height: 32px;
+                background-repeat: no-repeat;
+                background-position: right 8px center;
+                background-size: 12px;
+                padding-right: 30px;
+                /* space for arrow */
+                transition: all 0.2s ease-in-out;
+                cursor: pointer;
+            }
+
+            select#modelSelect:hover {
+                background-color: #fff;
+                border-color: #888;
             }
 
             #modelSelect:focus {
@@ -195,6 +203,44 @@
                 button {
                     width: 100%;
                 }
+            }
+
+            #bubble-command {
+                display: flex;
+                overflow-x: auto;
+                /* ✅ ทำให้ scroll ซ้ายขวาได้ */
+                gap: 12px;
+                padding: 8px 12px;
+                margin-top: 12px;
+                background: transparent;
+                border: none;
+                scrollbar-width: none;
+                /* ซ่อน scrollbar สำหรับ Firefox */
+            }
+
+            /* ✅ ซ่อน scrollbar สำหรับ Chrome, Safari */
+            #bubble-command::-webkit-scrollbar {
+                display: none;
+            }
+
+            #bubble-command .green-bubble {
+                background: linear-gradient(110deg, #e7fce5 0%, #b5f7c8 100%);
+                color: #225c33;
+                border: 1px solid #a6efb9;
+                border-radius: 999px;
+                padding: 10px 16px;
+                font-size: 14px;
+                white-space: nowrap;
+                transition: background 0.2s ease, transform 0.2s ease;
+                cursor: pointer;
+                flex-shrink: 0;
+                /* ✅ ป้องกันไม่ให้บั๊บเบิ้ลย่อ */
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+            }
+
+            #bubble-command .green-bubble:hover {
+                background: linear-gradient(110deg, #d4fbd8 0%, #9df5b4 100%);
+                transform: scale(1.03);
             }
 
             /* loading css */
@@ -252,14 +298,13 @@
 
     <body onload="loadChatHistory()">
         <div class="chat-container">
-			
-            <h3>]]>💬<![CDATA[ MFEC AI Agent</h3>
-            <div class="model-select-wrapper">
+            <div class="header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; gap: 4px;">
+                <h3 style="margin: 0; font-weight: bold; font-size: 1.75rem;">]]>💬<![CDATA[ MFEC AI Agent</h3>
                 <select id="modelSelect" title="เลือก AI Model">
                     <option value="mfecgpt">MFEC GPT(4.1)</option>
-                    <option value="tlskai">TalentSeeker.AI</option>
-                    <option value="itspai">ITSupport.AI</option>
-					<option value="nhsoai">NSHO.AI</option>
+                    <!-- <option value="tlskai">TalentSeeker.AI</option>
+                    <option value="itspai">ITSupport.AI</option> -->
+                    <option value="nhsoai">NSHO.AI</option>
                 </select>
             </div>
             <div id="chatbox">
@@ -276,7 +321,6 @@
         </div>
 
     </body>
-
     <script>
         var userId = "${gs.getUserID()}";
         var sessionId = "${gs.getSession().getSessionID()}";
@@ -298,6 +342,9 @@
                 messages.forEach(function(m) {
                     appendMessage(m.msg, m.type);
                 });
+                if (chkRecordURL()) {
+                    showBubbleCommand();
+                }
             });
         }
 
@@ -316,19 +363,19 @@
         }
 
         function appendMessage(text, type) {
-    var chat = document.getElementById('chatbox');
-    var msgDiv = document.createElement('div');
-    msgDiv.className = 'msg ' + (type === 'user' ? 'user-msg' : 'bot-msg');
+            var chat = document.getElementById('chatbox');
+            var msgDiv = document.createElement('div');
+            msgDiv.className = 'msg ' + (type === 'user' ? 'user-msg' : 'bot-msg');
 
-    if (type === 'bot') {
-        msgDiv.innerHTML = '<div style="font-size: 12px; color: #888; margin-left: 4px; margin-bottom: 2px;">]]>🤖<![CDATA[</div><div class="bubble bot-bubble">'+text+'</div>';
-    } else {
-        msgDiv.innerHTML = '<div style="font-size: 12px; color: #888; margin-left: 4px; margin-bottom: 2px;">]]>👨🏻<![CDATA[</div><div class="bubble user-bubble">' + text + '</div>';
-    }
+            if (type === 'bot') {
+                msgDiv.innerHTML = '<div style="font-size: 12px; color: #888; margin-left: 4px; margin-bottom: 2px;">]]>🤖<![CDATA[</div><div class="bubble bot-bubble">' + text + '</div>';
+            } else {
+                msgDiv.innerHTML = '<div style="font-size: 12px; color: #888; margin-left: 4px; margin-bottom: 2px;">]]>👨🏻<![CDATA[</div><div class="bubble user-bubble">' + text + '</div>';
+            }
 
-    chat.appendChild(msgDiv);
-    chat.scrollTop = chat.scrollHeight;
-}
+            chat.appendChild(msgDiv);
+            chat.scrollTop = chat.scrollHeight;
+        }
 
         function saveMessage(text, type) {
             var ga = new GlideAjax('MF_AIUtils');
@@ -342,7 +389,7 @@
 
         // ฟังก์ชันใหม่: รับข้อความผู้ใช้ + callback เมื่อได้คำตอบจาก GlideAjax
         function getBotReply(msg, callback) {
-			var model = modelSelect.value.toString();
+            var model = modelSelect.value.toString();
             var ga = new GlideAjax('MF_AIUtils');
             ga.addParam('sysparm_name', 'getAIanswer');
             ga.addParam('sysparm_ques', msg);
@@ -363,7 +410,6 @@
             ga.getXML();
         }
 
-        // ฟังก์ชันแสดง Bubble "กำลังพิมพ์..."
         function showTyping() {
             var chat = document.getElementById('chatbox');
             var typingDiv = document.createElement('div');
@@ -393,6 +439,80 @@
                 chatbox.scrollTop = chatbox.scrollHeight;
             }
         }
+
+        function chkRecordURL() {
+            var parentUrl = window.top.location.pathname;
+            var match = parentUrl.match(/\/record\/([^\/]+)\/([^\/]+)/);
+            if (match) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        function showBubbleCommand() {
+            if (document.getElementById('bubble-command')) return;
+
+            const chat = document.getElementById('chatbox');
+            const wrapper = document.createElement('div');
+            wrapper.id = 'bubble-command';
+
+            const createBubble = (text, onClickHandler) => {
+                const bubble = document.createElement('div');
+                bubble.className = 'green-bubble';
+                bubble.innerText = text;
+                bubble.onclick = () => {
+                    onClickHandler();
+                    // wrapper.remove();
+                };
+                return bubble;
+            };
+
+            var bubble1 = createBubble(']]>📋<![CDATA[ สรุปข้อมูลจาก record นี้', () => autoSumRecordInChat());
+            var bubble2 = createBubble(']]>📝<![CDATA[ สรุปข้อมูลลงใน record นี้', () => autoSumRecordInForm());
+
+            wrapper.appendChild(bubble1);
+            wrapper.appendChild(bubble2);
+            chat.appendChild(wrapper);
+            scrollChatboxToBottom();
+        }
+
+        function autoSumRecordInChat() {
+            showTyping();
+            var match = window.top.location.pathname.match(/\/record\/([^\/]+)\/([^\/]+)/);
+            var table = match[1];
+            var sysId = match[2];
+            var ga = new GlideAjax('MF_AIUtils');
+            ga.addParam('sysparm_name', 'getAIautoSumRecord');
+            ga.addParam('sysparm_table', table);
+            ga.addParam('sysparm_id', sysId);
+            ga.getXML(function(response) {
+                var answer = response.responseXML.documentElement.getAttribute("answer");
+                removeTyping();
+                appendMessage(answer, 'bot');
+                saveMessage(answer, 'bot');
+            });
+        }
+
+		function autoSumRecordInForm() {
+            showTyping();
+            var match = window.top.location.pathname.match(/\/record\/([^\/]+)\/([^\/]+)/);
+            var table = match[1];
+            var sysId = match[2];
+            var ga = new GlideAjax('MF_AIUtils');
+            ga.addParam('sysparm_name', 'getAIautoSumRecordInForm');
+            ga.addParam('sysparm_table', table);
+            ga.addParam('sysparm_id', sysId);
+            ga.getXML(function(response) {
+                var answer = response.responseXML.documentElement.getAttribute("answer");
+                removeTyping();
+				if (answer == 'Completed') {
+                	appendMessage('โปรดตรวจสอบในหัวข้อ AI summary ของใบงาน', 'bot');
+				} else {
+					appendMessage('พบปัญหาในการดำเนินการ โปรดทดลองใหม่อีกครั้งในภายหลัง', 'bot');
+				}
+            });
+        }
     </script>
 
     </html>
@@ -403,14 +523,14 @@
         <sys_created_by>admin.gust</sys_created_by>
         <sys_created_on>2025-05-22 15:16:05</sys_created_on>
         <sys_id>e02c216393e56a507ff935277bba100b</sys_id>
-        <sys_mod_count>122</sys_mod_count>
+        <sys_mod_count>175</sys_mod_count>
         <sys_name>chat_ui</sys_name>
         <sys_package display_value="MFEC AI Utils GB" source="7efc99ef93e16a507ff935277bba10ee">7efc99ef93e16a507ff935277bba10ee</sys_package>
         <sys_policy/>
         <sys_scope display_value="MFEC AI Utils GB">7efc99ef93e16a507ff935277bba10ee</sys_scope>
         <sys_update_name>sys_ui_page_e02c216393e56a507ff935277bba100b</sys_update_name>
         <sys_updated_by>admin.gust</sys_updated_by>
-        <sys_updated_on>2025-05-30 06:41:10</sys_updated_on>
+        <sys_updated_on>2025-06-01 08:25:58</sys_updated_on>
     </sys_ui_page>
     <sys_es_latest_script action="INSERT_OR_UPDATE">
         <id>e02c216393e56a507ff935277bba100b</id>
