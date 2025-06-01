@@ -52,6 +52,14 @@
     scrollbar-width: none;
 }
 
+#sn-chat-modal.hidden {
+    display: none;
+}
+
+#sn-chat-modal.visible {
+    display: block;
+}
+
 @keyframes fadeInUp {
     from {
         opacity: 0;

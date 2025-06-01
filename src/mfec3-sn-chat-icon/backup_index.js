@@ -3,16 +3,6 @@ import snabbdom from "@servicenow/ui-renderer-snabbdom";
 import styles from "./styles.scss";
 
 const view = (state, { updateState }) => {
-	window.addEventListener("keydown", (event) => {
-		if (event.shiftKey && event.key.toLowerCase() === "c") {
-			updateState({ showModal: !state.showModal });
-		}
-
-		if (event.key === "Escape") {
-			updateState({ showModal: false });
-		}
-	});
-
 	const toggleModal = () => {
 		updateState({ showModal: !state.showModal });
 	};
@@ -20,7 +10,6 @@ const view = (state, { updateState }) => {
 	return (
 		<div>
 			<div
-				tabIndex={-1}
 				id="sn-chat-icon"
 				title="Chat AI Agent (Shift+C)"
 				onclick={toggleModal}
@@ -38,7 +27,7 @@ const view = (state, { updateState }) => {
 	);
 };
 
-createCustomElement("mfec-3-sn-chat-icon", {
+createCustomElement("mfec3-sn-chat-icon", {
 	renderer: { type: snabbdom },
 	view,
 	initialState: {

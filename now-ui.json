@@ -4,7 +4,7 @@
       "innerComponents": [],
       "uiBuilder": {
         "associatedTypes": ["global.core", "global.landing-page"],
-        "label": "[MFEC]Chat AI agent",
+        "label": "[MFEC] Chat AI agent",
         "tileIcon": "./tile-icon/mfec.svg",
         "description": "Chat AI Agent UI",
         "category": "MFEC customizations"
