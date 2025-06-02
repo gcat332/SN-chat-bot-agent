@@ -2,11 +2,7 @@
     <sys_ui_page action="INSERT_OR_UPDATE">
         <category>cms</category>
         <client_script/>
-        <description>02/05/2025 : add multi bubble function&#13;
-01/06/2025 : enchanced UX/UI, add function to summary to record field&#13;
-31/05/2025 : add function for auto summary records (autoSumRecord) when open chat_ui in record workspace&#13;
-30/05/2025 : add function to select AI model&#13;
-28/05/2025 : update to use mfec_gpt (https://mfec-ai-agent-29849930840.asia-southeast1.run.app/agent_mfecgpt)</description>
+        <description>02/05/2025 : create for test new function</description>
         <direct>false</direct>
         <endpoint/>
         <html><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
@@ -498,7 +494,7 @@
                 var answer = response.responseXML.documentElement.getAttribute("answer");
                 removeTyping();
                 appendMessage(answer, 'bot');
-                // saveMessage(answer, 'bot');
+                saveMessage(answer, 'bot');
 				showBubbleCommand([{
                     label: ']]>📝<![CDATA[ บันทึกสรุปลงใน record นี้',
                     onClickHandler: () => saveSumRecordInForm(answer)
@@ -551,30 +547,19 @@
 
     </html>
 </j:jelly>]]></html>
-        <name>chat_ui</name>
+        <name>chat_ui_test</name>
         <processing_script/>
         <sys_class_name>sys_ui_page</sys_class_name>
         <sys_created_by>admin.gust</sys_created_by>
-        <sys_created_on>2025-05-22 15:16:05</sys_created_on>
-        <sys_id>e02c216393e56a507ff935277bba100b</sys_id>
-        <sys_mod_count>203</sys_mod_count>
-        <sys_name>chat_ui</sys_name>
+        <sys_created_on>2025-06-02 03:14:25</sys_created_on>
+        <sys_id>57907ffa83f1a610c43bb488beaad331</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>chat_ui_test</sys_name>
         <sys_package display_value="MFEC AI Utils GB" source="7efc99ef93e16a507ff935277bba10ee">7efc99ef93e16a507ff935277bba10ee</sys_package>
         <sys_policy/>
         <sys_scope display_value="MFEC AI Utils GB">7efc99ef93e16a507ff935277bba10ee</sys_scope>
-        <sys_update_name>sys_ui_page_e02c216393e56a507ff935277bba100b</sys_update_name>
+        <sys_update_name>sys_ui_page_57907ffa83f1a610c43bb488beaad331</sys_update_name>
         <sys_updated_by>admin.gust</sys_updated_by>
-        <sys_updated_on>2025-06-02 03:15:21</sys_updated_on>
+        <sys_updated_on>2025-06-02 03:14:25</sys_updated_on>
     </sys_ui_page>
-    <sys_es_latest_script action="INSERT_OR_UPDATE">
-        <id>e02c216393e56a507ff935277bba100b</id>
-        <sys_created_by>admin.gust</sys_created_by>
-        <sys_created_on>2025-05-22 15:16:04</sys_created_on>
-        <sys_id>174c696393e56a507ff935277bba109a</sys_id>
-        <sys_mod_count>0</sys_mod_count>
-        <sys_updated_by>admin.gust</sys_updated_by>
-        <sys_updated_on>2025-05-22 15:16:04</sys_updated_on>
-        <table>sys_ui_page</table>
-        <use_es_latest>true</use_es_latest>
-    </sys_es_latest_script>
 </record_update>
