@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_rest_message_fn_headers">
+    <sys_rest_message_fn_headers action="DELETE">
+        <name>Content-Type</name>
+        <rest_message_function display_value="nhsokb">633873de8335a210c43bb488beaad305</rest_message_function>
+        <sys_class_name>sys_rest_message_fn_headers</sys_class_name>
+        <sys_created_by>admin.gust</sys_created_by>
+        <sys_created_on>2025-05-31 14:59:24</sys_created_on>
+        <sys_id>cbbe335e8375a210c43bb488beaad370</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Content-Type</sys_name>
+        <sys_package display_value="MFEC AI Utils GB" source="7efc99ef93e16a507ff935277bba10ee">7efc99ef93e16a507ff935277bba10ee</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="MFEC AI Utils GB">7efc99ef93e16a507ff935277bba10ee</sys_scope>
+        <sys_update_name>sys_rest_message_fn_headers_cbbe335e8375a210c43bb488beaad370</sys_update_name>
+        <sys_updated_by>admin.gust</sys_updated_by>
+        <sys_updated_on>2025-05-31 14:59:24</sys_updated_on>
+        <value>application/json</value>
+    </sys_rest_message_fn_headers>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="MFEC AI Utils GB">7efc99ef93e16a507ff935277bba10ee</application>
+        <file_path/>
+        <instance_id>114ad8d7dba6af4007072f17d496193e</instance_id>
+        <instance_name>mfecplcdemo2</instance_name>
+        <name>sys_rest_message_fn_headers_cbbe335e8375a210c43bb488beaad370</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_rest_message_fn_headers"><sys_rest_message_fn_headers action="INSERT_OR_UPDATE"><name>Content-Type</name><rest_message_function display_value="nhsokb">633873de8335a210c43bb488beaad305</rest_message_function><sys_class_name>sys_rest_message_fn_headers</sys_class_name><sys_created_by>admin.gust</sys_created_by><sys_created_on>2025-05-31 14:59:24</sys_created_on><sys_id>cbbe335e8375a210c43bb488beaad370</sys_id><sys_mod_count>0</sys_mod_count><sys_name>Content-Type</sys_name><sys_package display_value="MFEC AI Utils GB" source="7efc99ef93e16a507ff935277bba10ee">7efc99ef93e16a507ff935277bba10ee</sys_package><sys_policy/><sys_scope display_value="MFEC AI Utils GB">7efc99ef93e16a507ff935277bba10ee</sys_scope><sys_update_name>sys_rest_message_fn_headers_cbbe335e8375a210c43bb488beaad370</sys_update_name><sys_updated_by>admin.gust</sys_updated_by><sys_updated_on>2025-05-31 14:59:24</sys_updated_on><value>application/json</value></sys_rest_message_fn_headers></record_update>]]></payload>
+        <payload_hash>-671318855</payload_hash>
+        <record_name>Content-Type</record_name>
+        <reverted_from/>
+        <source>241c2d2393e56a507ff935277bba1093</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin.gust</sys_created_by>
+        <sys_created_on>2025-05-31 14:59:24</sys_created_on>
+        <sys_id>72cef35e8375a210c43bb488beaad316</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>19726dad3320000001</sys_recorded_at>
+        <sys_updated_by>admin.gust</sys_updated_by>
+        <sys_updated_on>2025-05-31 14:59:24</sys_updated_on>
+        <type>HTTP Headers</type>
+        <update_guid>36cef35e8475a2109b2c255abf1dbb15</update_guid>
+        <update_guid_history>36cef35e8475a2109b2c255abf1dbb15:-671318855</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin.gust</sys_created_by>
+        <sys_created_on>2025-06-02 06:27:05</sys_created_on>
+        <sys_db_object display_value="" name="sys_rest_message_fn_headers">sys_rest_message_fn_headers</sys_db_object>
+        <sys_id>027f83236e5c4ba88012a8836757e190</sys_id>
+        <sys_metadata>cbbe335e8375a210c43bb488beaad370</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Content-Type</sys_name>
+        <sys_package display_value="MFEC AI Utils GB" source="7efc99ef93e16a507ff935277bba10ee">7efc99ef93e16a507ff935277bba10ee</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="MFEC AI Utils GB">7efc99ef93e16a507ff935277bba10ee</sys_scope>
+        <sys_scope_delete display_value="">1bdbe40bd52942b38d70bfdca1b89989</sys_scope_delete>
+        <sys_update_name>sys_rest_message_fn_headers_cbbe335e8375a210c43bb488beaad370</sys_update_name>
+        <sys_update_version display_value="sys_rest_message_fn_headers_cbbe335e8375a210c43bb488beaad370">72cef35e8375a210c43bb488beaad316</sys_update_version>
+        <sys_updated_by>admin.gust</sys_updated_by>
+        <sys_updated_on>2025-06-02 06:27:05</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

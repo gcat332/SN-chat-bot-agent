@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl_role">
+    <sys_security_acl_role action="INSERT_OR_UPDATE">
+        <sys_class_name>sys_security_acl_role</sys_class_name>
+        <sys_created_by>admin.gust</sys_created_by>
+        <sys_created_on>2025-06-02 06:39:19</sys_created_on>
+        <sys_id>388f1cc78379a610c43bb488beaad38b</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>u_mf_ai_bubble_command.u_mf_ai_bubble_command_user</sys_name>
+        <sys_package display_value="MFEC AI Utils GB" source="7efc99ef93e16a507ff935277bba10ee">7efc99ef93e16a507ff935277bba10ee</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="MFEC AI Utils GB">7efc99ef93e16a507ff935277bba10ee</sys_scope>
+        <sys_security_acl display_value="u_mf_ai_bubble_command">708f1cc78379a610c43bb488beaad340</sys_security_acl>
+        <sys_update_name>sys_security_acl_role_388f1cc78379a610c43bb488beaad38b</sys_update_name>
+        <sys_updated_by>admin.gust</sys_updated_by>
+        <sys_updated_on>2025-06-02 06:39:19</sys_updated_on>
+        <sys_user_role display_value="u_mf_ai_bubble_command_user" name="u_mf_ai_bubble_command_user">008f10c78379a610c43bb488beaad361</sys_user_role>
+    </sys_security_acl_role>
+</record_update>

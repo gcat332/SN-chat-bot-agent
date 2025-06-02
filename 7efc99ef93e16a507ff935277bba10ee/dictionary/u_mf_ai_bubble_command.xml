@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="fb4dd4c38379a610c43bb488beaad3d3" label="MF AI Bubble Command" max_length="40" name="u_mf_ai_bubble_command" type="collection">
+        <element label="Script" mandatory="true" max_length="8000" name="u_script" type="script_plain"/>
+        <element display="true" label="Name" mandatory="true" max_length="80" name="u_name" type="string"/>
+        <element label="Condition Function" max_length="200" name="u_condition" reference="u_mf_ai_bubble_command" reference_qual="u_type=condition^EQ" reference_qual_condition="u_type=condition^EQ" type="reference"/>
+        <element label="Parent Function" max_length="32" name="u_parent_function" reference="u_mf_ai_bubble_command" reference_qual="u_type=function^EQ" reference_qual_condition="u_type=function^EQ" type="reference"/>
+        <element label="Order" max_length="10" name="u_order" type="integer"/>
+        <element choice="3" default="function" label="Type" max_length="40" name="u_type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Condition" sequence="1" value="condition"/>
+                <element inactive_on_update="false" label="Function" sequence="2" value="function"/>
+            </choice>
+        </element>
+        <element label="Label" max_length="200" name="u_label" type="string"/>
+        <element label="Active" max_length="40" name="u_active" type="boolean"/>
+        <element label="Main Function Name" mandatory="true" max_length="80" name="u_script_name" type="string"/>
+        <index name="index">
+            <element name="u_parent_function"/>
+        </index>
+    </element>
+</database>

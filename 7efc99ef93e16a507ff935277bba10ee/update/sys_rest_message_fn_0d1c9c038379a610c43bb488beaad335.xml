@@ -5,26 +5,26 @@
         <basic_auth_profile/>
         <basic_auth_user/>
         <content/>
-        <function_name>nhsokb</function_name>
+        <function_name>autosumai</function_name>
         <http_method>post</http_method>
         <lock>false</lock>
         <oauth2_profile/>
         <protocol_name/>
-        <qualified_name>Chat UI Agent [ nhsokb ]</qualified_name>
-        <rest_endpoint>https://dev-netident.mfec.co.th/webhook/snow-autorecomend</rest_endpoint>
-        <rest_message display_value="Chat UI Agent">a71838ce83b12e90c43bb488beaad31d</rest_message>
+        <qualified_name>Chat UI Agent Action [ autosumai ]</qualified_name>
+        <rest_endpoint>https://mfec-ai-agent-29849930840.asia-southeast1.run.app/sum_mfecgpt</rest_endpoint>
+        <rest_message display_value="Chat UI Agent Action">c11c9c038379a610c43bb488beaad333</rest_message>
         <sys_class_name>sys_rest_message_fn</sys_class_name>
         <sys_created_by>admin.gust</sys_created_by>
-        <sys_created_on>2025-05-31 14:30:57</sys_created_on>
-        <sys_id>633873de8335a210c43bb488beaad305</sys_id>
+        <sys_created_on>2025-06-02 06:24:19</sys_created_on>
+        <sys_id>0d1c9c038379a610c43bb488beaad335</sys_id>
         <sys_mod_count>1</sys_mod_count>
-        <sys_name>nhsokb</sys_name>
+        <sys_name>autosumai</sys_name>
         <sys_package display_value="MFEC AI Utils GB" source="7efc99ef93e16a507ff935277bba10ee">7efc99ef93e16a507ff935277bba10ee</sys_package>
         <sys_policy/>
         <sys_scope display_value="MFEC AI Utils GB">7efc99ef93e16a507ff935277bba10ee</sys_scope>
-        <sys_update_name>sys_rest_message_fn_633873de8335a210c43bb488beaad305</sys_update_name>
+        <sys_update_name>sys_rest_message_fn_0d1c9c038379a610c43bb488beaad335</sys_update_name>
         <sys_updated_by>admin.gust</sys_updated_by>
-        <sys_updated_on>2025-05-31 14:31:18</sys_updated_on>
+        <sys_updated_on>2025-06-02 06:26:32</sys_updated_on>
         <use_basic_auth>false</use_basic_auth>
         <use_mid_server/>
         <use_mutual_auth>false</use_mutual_auth>

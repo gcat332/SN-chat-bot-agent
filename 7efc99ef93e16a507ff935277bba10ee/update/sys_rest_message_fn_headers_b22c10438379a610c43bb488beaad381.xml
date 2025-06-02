@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sys_rest_message_fn_headers">
     <sys_rest_message_fn_headers action="INSERT_OR_UPDATE">
         <name>Content-Type</name>
-        <rest_message_function display_value="nhsokb">633873de8335a210c43bb488beaad305</rest_message_function>
+        <rest_message_function display_value="nhsokb">aa2c9c038379a610c43bb488beaad3a8</rest_message_function>
         <sys_class_name>sys_rest_message_fn_headers</sys_class_name>
         <sys_created_by>admin.gust</sys_created_by>
-        <sys_created_on>2025-05-31 14:59:24</sys_created_on>
-        <sys_id>cbbe335e8375a210c43bb488beaad370</sys_id>
+        <sys_created_on>2025-06-02 06:25:24</sys_created_on>
+        <sys_id>b22c10438379a610c43bb488beaad381</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Content-Type</sys_name>
         <sys_package display_value="MFEC AI Utils GB" source="7efc99ef93e16a507ff935277bba10ee">7efc99ef93e16a507ff935277bba10ee</sys_package>
         <sys_policy/>
         <sys_scope display_value="MFEC AI Utils GB">7efc99ef93e16a507ff935277bba10ee</sys_scope>
-        <sys_update_name>sys_rest_message_fn_headers_cbbe335e8375a210c43bb488beaad370</sys_update_name>
+        <sys_update_name>sys_rest_message_fn_headers_b22c10438379a610c43bb488beaad381</sys_update_name>
         <sys_updated_by>admin.gust</sys_updated_by>
-        <sys_updated_on>2025-05-31 14:59:24</sys_updated_on>
+        <sys_updated_on>2025-06-02 06:25:24</sys_updated_on>
         <value>application/json</value>
     </sys_rest_message_fn_headers>
 </record_update>

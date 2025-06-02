@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_rest_message_fn">
+    <sys_rest_message_fn action="DELETE">
+        <authentication_type>inherit_from_parent</authentication_type>
+        <basic_auth_password/>
+        <basic_auth_profile/>
+        <basic_auth_user/>
+        <content/>
+        <function_name>itspai</function_name>
+        <http_method>post</http_method>
+        <lock>false</lock>
+        <oauth2_profile/>
+        <protocol_name/>
+        <qualified_name>Chat UI Agent [ itspai ]</qualified_name>
+        <rest_endpoint>https://demo1.com</rest_endpoint>
+        <rest_message display_value="Chat UI Agent">a71838ce83b12e90c43bb488beaad31d</rest_message>
+        <sys_class_name>sys_rest_message_fn</sys_class_name>
+        <sys_created_by>admin.gust</sys_created_by>
+        <sys_created_on>2025-05-30 06:36:55</sys_created_on>
+        <sys_id>9832cdc283352e90c43bb488beaad3e9</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>itspai</sys_name>
+        <sys_package display_value="MFEC AI Utils GB" source="7efc99ef93e16a507ff935277bba10ee">7efc99ef93e16a507ff935277bba10ee</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="MFEC AI Utils GB">7efc99ef93e16a507ff935277bba10ee</sys_scope>
+        <sys_update_name>sys_rest_message_fn_9832cdc283352e90c43bb488beaad3e9</sys_update_name>
+        <sys_updated_by>admin.gust</sys_updated_by>
+        <sys_updated_on>2025-05-30 06:38:00</sys_updated_on>
+        <use_basic_auth>false</use_basic_auth>
+        <use_mid_server/>
+        <use_mutual_auth>false</use_mutual_auth>
+    </sys_rest_message_fn>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="MFEC AI Utils GB">7efc99ef93e16a507ff935277bba10ee</application>
+        <file_path/>
+        <instance_id>114ad8d7dba6af4007072f17d496193e</instance_id>
+        <instance_name>mfecplcdemo2</instance_name>
+        <name>sys_rest_message_fn_9832cdc283352e90c43bb488beaad3e9</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_rest_message_fn"><sys_rest_message_fn action="INSERT_OR_UPDATE"><authentication_type>inherit_from_parent</authentication_type><basic_auth_password/><basic_auth_profile/><basic_auth_user/><content/><function_name>itspai</function_name><http_method>post</http_method><lock>false</lock><oauth2_profile/><protocol_name/><qualified_name>Chat UI Agent [ itspai ]</qualified_name><rest_endpoint>https://demo1.com</rest_endpoint><rest_message display_value="Chat UI Agent">a71838ce83b12e90c43bb488beaad31d</rest_message><sys_class_name>sys_rest_message_fn</sys_class_name><sys_created_by>admin.gust</sys_created_by><sys_created_on>2025-05-30 06:36:55</sys_created_on><sys_id>9832cdc283352e90c43bb488beaad3e9</sys_id><sys_mod_count>1</sys_mod_count><sys_name>itspai</sys_name><sys_package display_value="MFEC AI Utils GB" source="7efc99ef93e16a507ff935277bba10ee">7efc99ef93e16a507ff935277bba10ee</sys_package><sys_policy/><sys_scope display_value="MFEC AI Utils GB">7efc99ef93e16a507ff935277bba10ee</sys_scope><sys_update_name>sys_rest_message_fn_9832cdc283352e90c43bb488beaad3e9</sys_update_name><sys_updated_by>admin.gust</sys_updated_by><sys_updated_on>2025-05-30 06:38:00</sys_updated_on><use_basic_auth>false</use_basic_auth><use_mid_server/><use_mutual_auth>false</use_mutual_auth></sys_rest_message_fn></record_update>]]></payload>
+        <payload_hash>125772481</payload_hash>
+        <record_name>itspai</record_name>
+        <reverted_from/>
+        <source>241c2d2393e56a507ff935277bba1093</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin.gust</sys_created_by>
+        <sys_created_on>2025-05-30 06:38:00</sys_created_on>
+        <sys_id>0072014683352e90c43bb488beaad33c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1971fe96a5e0000001</sys_recorded_at>
+        <sys_updated_by>admin.gust</sys_updated_by>
+        <sys_updated_on>2025-05-30 06:38:00</sys_updated_on>
+        <type>HTTP Method</type>
+        <update_guid>0472014632352e9036851a99ada8cd3b</update_guid>
+        <update_guid_history>0472014632352e9036851a99ada8cd3b:125772481,9c32cdc25b352e90a1f185eebe5fc0ea:-1915111669</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin.gust</sys_created_by>
+        <sys_created_on>2025-06-02 06:27:05</sys_created_on>
+        <sys_db_object display_value="" name="sys_rest_message_fn">sys_rest_message_fn</sys_db_object>
+        <sys_id>007a6a8e68994ee88088aa1bb219ae40</sys_id>
+        <sys_metadata>9832cdc283352e90c43bb488beaad3e9</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>itspai</sys_name>
+        <sys_package display_value="MFEC AI Utils GB" source="7efc99ef93e16a507ff935277bba10ee">7efc99ef93e16a507ff935277bba10ee</sys_package>
+        <sys_parent display_value="Chat UI Agent">a71838ce83b12e90c43bb488beaad31d</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="MFEC AI Utils GB">7efc99ef93e16a507ff935277bba10ee</sys_scope>
+        <sys_scope_delete display_value="">1bdbe40bd52942b38d70bfdca1b89989</sys_scope_delete>
+        <sys_update_name>sys_rest_message_fn_9832cdc283352e90c43bb488beaad3e9</sys_update_name>
+        <sys_update_version display_value="sys_rest_message_fn_9832cdc283352e90c43bb488beaad3e9">0072014683352e90c43bb488beaad33c</sys_update_version>
+        <sys_updated_by>admin.gust</sys_updated_by>
+        <sys_updated_on>2025-06-02 06:27:05</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

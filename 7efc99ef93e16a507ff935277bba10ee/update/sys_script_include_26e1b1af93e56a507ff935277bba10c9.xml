@@ -5,7 +5,8 @@
         <api_name>global.MF_AIUtils</api_name>
         <caller_access/>
         <client_callable>true</client_callable>
-        <description>31/05/2025 : add function for auto summary records (getAIautoSumRecords)&#13;
+        <description>02/06/2025 : add dynamic bubble action function&#13;
+31/05/2025 : add function for auto summary records (getAIautoSumRecords)&#13;
 30/05/2025 : add function to select AI model&#13;
 28/05/2025 : update to use mfec_gpt (https://mfec-ai-agent-29849930840.asia-southeast1.run.app/agent_mfecgpt)</description>
         <mobile_callable>false</mobile_callable>
@@ -13,134 +14,6 @@
         <sandbox_callable>false</sandbox_callable>
         <script><![CDATA[var MF_AIUtils = Class.create();
 MF_AIUtils.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
-
-    getAIautoSumRecord: function() {
-        var recTable = this.getParameter('sysparm_table');
-        var recID = this.getParameter('sysparm_id');
-        try {
-            var requestBody = this._getReuestBodySumRecord(recTable,recID,'nhsokb');
-            var request = new sn_ws.RESTMessageV2('Chat UI Agent','autosumai');
-            request.setRequestBody(requestBody);
-            var response = request.execute();
-            var responseBody = response.getBody();
-            var httpStatus = response.getStatusCode();
-            var JSOBresponse = JSON.parse(responseBody);
-            var answer = JSOBresponse.answer;
-            return this._removeCodeBlockWrappers(answer);
-        } catch (ex) {
-            return 'Error: '+ex.message;
-        }
-    },
-
-    getAIautoSumRecordInForm: function() {
-        var recTable = this.getParameter('sysparm_table');
-        var recID = this.getParameter('sysparm_id');
-        try {
-            var requestBody = this._getReuestBodySumRecord(recTable,recID,'nhsokb');
-            var request = new sn_ws.RESTMessageV2('Chat UI Agent','autosumai');
-            request.setRequestBody(requestBody);
-            var response = request.execute();
-            var responseBody = response.getBody();
-            var httpStatus = response.getStatusCode();
-            var JSOBresponse = JSON.parse(responseBody);
-            var answer = JSOBresponse.answer;
-
-            var gr = new GlideRecord(recTable);
-            gr.get(recID);
-            gr.u_ai_summary = this._removeCodeBlockWrappers(answer);
-            gr.update();
-            return 'Completed';
-        } catch (ex) {
-            return 'Error: '+ex.message;
-        }
-    },
-
-    saveAIautoSumRecordInForm: function() {
-        var recTable = this.getParameter('sysparm_table');
-        var recID = this.getParameter('sysparm_id');
-        var recSum = this.getParameter('sysparm_summary');
-        try {
-            var gr = new GlideRecord(recTable);
-            gr.get(recID);
-            gr.u_ai_summary = this._removeCodeBlockWrappers(recSum);
-            gr.update();
-            return 'Completed';
-        } catch (ex) {
-            return 'Error: '+ex.message;
-        }
-    },
-
-    getAIautoSumRecordBG: function(table,id,aiModel) {
-        try {
-            var requestBody = this._getReuestBodySumRecord(table,id,aiModel);
-            var request = new sn_ws.RESTMessageV2('Chat UI Agent',aiModel);
-            request.setRequestBody(requestBody);
-            var response = request.execute();
-            var responseBody = response.getBody();
-            var httpStatus = response.getStatusCode();
-            var JSOBresponse = JSON.parse(responseBody);
-            var answer = JSOBresponse.answer;
-            return this._removeCodeBlockWrappers(answer);
-        } catch (ex) {
-            return 'Error: '+ex.message;
-        }
-    },
-
-     _getReuestBodySumRecord: function(table,id,aiModel) {
-        gr = new GlideRecord(table);
-        gr.get(id);
-        var requestBody = JSON.stringify({
-            table: gr.getTableName(),
-            number: gr.number.toString(),
-            state: gr.state.getDisplayValue().toString(),
-            short_desc: gr.short_description.toString(),
-            description: gr.description.toString(),
-            assignment_group: gr.assignment_group.getDisplayValue().toString(),
-            assigned_to: gr.assigned_to.getDisplayValue().toString(),
-            resolution_code: gr.resolution_code.getDisplayValue().toString(),
-            close_notes: gr.close_notes.toString(),
-            work_note: this._getWorkNoteList(table,id),
-            ai_kb_answer : this._getAIanswerKB(gr.short_description.toString(),aiModel)
-        });
-            return requestBody;
-    },
-
-    _getAIanswerKB: function(question,aiModel) {
-        try {
-            var requestBody = this._getRequestBodyKB(question);
-            var request = new sn_ws.RESTMessageV2('Chat UI Agent',aiModel);
-            request.setRequestBody(requestBody);
-            var response = request.execute();
-            var responseBody = response.getBody();
-            var httpStatus = response.getStatusCode();
-            var JSOBresponse = JSON.parse(responseBody);
-            var answer = JSOBresponse.output;
-            return this._removeCodeBlockWrappers(answer);
-        } catch (ex) {
-            return 'Error: '+ex.message;
-        }
-    },
-
-    _getRequestBodyKB: function(question) {
-        var requestBody = JSON.stringify({
-            message : question
-        });
-        return requestBody;
-    },
-
-    _getWorkNoteList: function(table,id) {
-        var workNoteList = '';
-        var gr = new GlideRecord('sys_audit');
-        gr.addQuery('tablename', table);
-        gr.addQuery('documentkey', id);
-        gr.addEncodedQuery('fieldname=work_notes^ORfieldname=comments');
-        gr.orderByDesc('sys_created_on');
-        gr.query();
-        while (gr.next()) {
-            workNoteList += (gr.user.getDisplayValue() + ': ' + gr.newvalue  + ' | At: ' + gr.sys_created_on+'\n');
-        }
-        return workNoteList;
-    },
 
     getAIanswer: function() {
         var question = this.getParameter('sysparm_ques');
@@ -152,8 +25,8 @@ MF_AIUtils.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
             var response = request.execute();
             var responseBody = response.getBody();
             var httpStatus = response.getStatusCode();
-            var JSOBresponse = JSON.parse(responseBody);
-            var answer = JSOBresponse.answer;
+            var JSONresponse = JSON.parse(responseBody);
+            var answer = JSONresponse.answer;
             return this._removeCodeBlockWrappers(answer);
         } catch (ex) {
             return 'Error: '+ex.message;
@@ -230,20 +103,61 @@ MF_AIUtils.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
         gr.addQuery('u_session', session);
         gr.deleteMultiple();
     },
+
+    getBubbleFunctionList: function () {
+        var bubles = [];
+        var gr = new GlideRecord('u_mf_ai_bubble_command');
+        gr.addQuery('u_active', 'true');
+        gr.addNullQuery('u_parent_function');
+        gr.addQuery('u_type','function');
+        gr.orderBy('u_order');
+        gr.query();
+        while (gr.next()) {
+            bubles.push({
+                label: gr.u_label.toString(),
+                script_name: gr.u_script_name.toString(),
+                sys_id: gr.sys_id.toString(),
+                condition: gr.u_condition.u_script_name.toString()
+            });  
+        }
+        return JSON.stringify(bubles);
+    },
+
+    getChildFunctionList: function () {
+        var parent = this.getParameter('sysparm_parent');
+        var bubles = [];
+        var gr = new GlideRecord('u_mf_ai_bubble_command');
+        gr.addQuery('u_active', 'true');
+        gr.addQuery('u_parent_function', parent);
+        gr.addQuery('u_type','function');
+        gr.orderBy('u_order');
+        gr.query();
+        while (gr.next()) {
+            bubles.push({
+                label: gr.u_label.toString(),
+                script_name: gr.u_script_name.toString(),
+                sys_id: gr.sys_id.toString(),
+                condition: gr.u_condition.u_script_name.toString()
+            });
+        }
+
+        return JSON.stringify(bubles);
+    },
+
     type: 'MF_AIUtils'
 });]]></script>
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>admin.gust</sys_created_by>
         <sys_created_on>2025-05-22 15:40:58</sys_created_on>
         <sys_id>26e1b1af93e56a507ff935277bba10c9</sys_id>
-        <sys_mod_count>129</sys_mod_count>
+        <sys_mod_count>163</sys_mod_count>
         <sys_name>MF_AIUtils</sys_name>
         <sys_package display_value="MFEC AI Utils GB" source="7efc99ef93e16a507ff935277bba10ee">7efc99ef93e16a507ff935277bba10ee</sys_package>
         <sys_policy/>
         <sys_scope display_value="MFEC AI Utils GB">7efc99ef93e16a507ff935277bba10ee</sys_scope>
         <sys_update_name>sys_script_include_26e1b1af93e56a507ff935277bba10c9</sys_update_name>
         <sys_updated_by>admin.gust</sys_updated_by>
-        <sys_updated_on>2025-06-02 02:31:18</sys_updated_on>
+        <sys_updated_on>2025-06-02 10:46:09</sys_updated_on>
     </sys_script_include>
     <sys_es_latest_script action="INSERT_OR_UPDATE">
         <id>26e1b1af93e56a507ff935277bba10c9</id>

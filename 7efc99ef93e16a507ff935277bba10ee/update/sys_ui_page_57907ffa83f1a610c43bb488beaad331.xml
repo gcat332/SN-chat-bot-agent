@@ -2,11 +2,29 @@
     <sys_ui_page action="INSERT_OR_UPDATE">
         <category>cms</category>
         <client_script/>
-        <description>02/05/2025 : create for test new function</description>
+        <description>02/05/2025_2 : pull custom bubble action from 'u_mf_ai_bubble_command'&#13;
+02/05/2025 : create for test new function</description>
         <direct>false</direct>
         <endpoint/>
         <html><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
 <j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide">
+    <!-- ดึง AI model มาเพิ่ม choice list -->
+    <g:evaluate var="jvar_ai_model" object="true">
+        var aiAgent = new GlideRecord('sys_rest_message_fn');
+        aiAgent.addEncodedQuery('rest_message.name=Chat UI Agent');
+        aiAgent.query();
+        aiAgent;
+    </g:evaluate>
+    <!-- ดึง bubble script list -->
+    <g:evaluate>
+        var bubbleScripts = '';
+        var bubbles = new GlideRecord('u_mf_ai_bubble_command');
+		bubbles.addQuery('u_active','true');
+        bubbles.query();
+        while (bubbles.next()) {
+        bubbleScripts += bubbles.u_script+' ';
+        }
+    </g:evaluate>
     <html>
 
     <head>
@@ -294,10 +312,11 @@
             <div class="header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; gap: 4px;">
                 <h3 style="margin: 0; font-weight: bold; font-size: 1.75rem;">]]>💬<![CDATA[ MFEC AI Agent</h3>
                 <select id="modelSelect" title="เลือก AI Model">
-                    <option value="mfecgpt">MFEC GPT(4.1)</option>
-                    <!-- <option value="tlskai">TalentSeeker.AI</option>
-                    <option value="itspai">ITSupport.AI</option> -->
-                    <option value="nhsoai">NSHO.AI</option>
+                    <j:while test="${jvar_ai_model.next()}">
+                        <option value="${jvar_ai_model.getValue('function_name')}">
+                            ${jvar_ai_model.getValue('function_name')}
+                        </option>
+                    </j:while>
                 </select>
             </div>
             <div id="chatbox">
@@ -314,6 +333,20 @@
         </div>
 
     </body>
+
+	<script>
+        var dynamicCode = '${bubbleScripts}';
+        if (dynamicCode) {
+            var scriptElement = document.createElement('script');
+            scriptElement.type = 'text/javascript';
+            scriptElement.textContent = dynamicCode;
+            document.head.appendChild(scriptElement);
+            console.log("Dynamic JavaScript code has been added and executed.");
+        } else {
+            console.warn("No dynamic JavaScript code to add.");
+        }
+    </script>
+
     <script>
         var userId = "${gs.getUserID()}";
         var sessionId = "${gs.getSession().getSessionID()}";
@@ -335,17 +368,7 @@
                 messages.forEach(function(m) {
                     appendMessage(m.msg, m.type);
                 });
-                if (chkRecordURL()) {
-                    showBubbleCommand([{
-                            label: ']]>📋<![CDATA[ สรุปข้อมูลจาก record นี้',
-                            onClickHandler: () => autoSumRecordInChat()
-                        },
-                        {
-                            label: ']]>📝<![CDATA[ สรุปข้อมูลลงใน record นี้',
-                            onClickHandler: () => autoSumRecordInForm()
-                        },
-                    ]);
-                }
+                initialBubbleCommand();
                 scrollChatboxToBottom();
             });
         }
@@ -446,7 +469,7 @@
             const chat = document.getElementById('chatbox');
             const wrapper = document.createElement('div');
             wrapper.id = `bubble-command`;
-			wrapper.className = `bubble-command-${Date.now()}`;
+            wrapper.className = `bubble-command-${Date.now()}`;
 
             const createBubble = (text, onClickHandler) => {
                 const bubble = document.createElement('div');
@@ -461,90 +484,75 @@
 
             bubbles.forEach(({
                 label,
+                conHandler,
                 onClickHandler
             }) => {
-                const bubble = createBubble(label, onClickHandler);
-                wrapper.appendChild(bubble);
+                if (conHandler) {
+					const conResult = window[conHandler]();
+					if (conResult) {
+                        const bubble = createBubble(label, onClickHandler);
+                        wrapper.appendChild(bubble);
+                    }
+                } else {
+                    const bubble = createBubble(label, onClickHandler);
+                    wrapper.appendChild(bubble);
+                }
             });
 
             chat.appendChild(wrapper);
             scrollChatboxToBottom();
         }
 
-        function chkRecordURL() {
-            var parentUrl = window.top.location.pathname;
-            var match = parentUrl.match(/\/record\/([^\/]+)\/([^\/]+)/);
-            if (match) {
-                return true;
-            } else {
-                return false;
+        function initialBubbleCommand() {
+            var ga = new GlideAjax('MF_AIUtils');
+            ga.addParam('sysparm_name', 'getBubbleFunctionList');
+            ga.getXML(function(response) {
+                var answer = response.responseXML.documentElement.getAttribute("answer");
+                var funcs = JSON.parse(answer);
+				console.log(funcs);
+                var bubbles = funcs.map(func => ({
+                    label: func.label,
+                    conHandler: func.condition,
+                    onClickHandler: () => {
+                        if (typeof window[func.script_name] === 'function') {
+                            window[func.script_name]();
+                            checkAndRenderChildBubble(func.sys_id);
+                        } else {
+                            console.error("Error: Function '" + func.script_name + "' not found or is not a function.");
+                        }
+                    }
+                }));
+
+                showBubbleCommand(bubbles);
+
+            });
+
+            function checkAndRenderChildBubble(parentSysID) {
+                var ga = new GlideAjax('MF_AIUtils');
+                ga.addParam('sysparm_name', 'getChildFunctionList');
+                ga.addParam('sysparm_parent', parentSysID);
+                ga.getXML(function(response) {
+                    var answer = response.responseXML.documentElement.getAttribute("answer");
+                    var funcs = JSON.parse(answer);
+                    if (funcs.length > 0) {
+                        var childBubbles = funcs.map(func => ({
+                            label: func.label,
+                            conHandler: func.condition,
+                            onClickHandler: () => {
+                                if (typeof window[func.script_name] === 'function') {
+                                    window[func.script_name]();
+                                    checkAndRenderChildBubble(func.sys_id);
+                                } else {
+                                    console.error("Error: Function '" + func.name + "' not found or is not a function.");
+                                }
+                            }
+                        }));
+                        showBubbleCommand(childBubbles);
+                    }
+                });
             }
         }
-
-        function autoSumRecordInChat() {
-            showTyping();
-            var match = window.top.location.pathname.match(/\/record\/([^\/]+)\/([^\/]+)/);
-            var table = match[1];
-            var sysId = match[2];
-            var ga = new GlideAjax('MF_AIUtils');
-            ga.addParam('sysparm_name', 'getAIautoSumRecord');
-            ga.addParam('sysparm_table', table);
-            ga.addParam('sysparm_id', sysId);
-            ga.getXML(function(response) {
-                var answer = response.responseXML.documentElement.getAttribute("answer");
-                removeTyping();
-                appendMessage(answer, 'bot');
-                saveMessage(answer, 'bot');
-				showBubbleCommand([{
-                    label: ']]>📝<![CDATA[ บันทึกสรุปลงใน record นี้',
-                    onClickHandler: () => saveSumRecordInForm(answer)
-                }]);
-            });
-        }
-
-        function autoSumRecordInForm() {
-            showTyping();
-            var match = window.top.location.pathname.match(/\/record\/([^\/]+)\/([^\/]+)/);
-            var table = match[1];
-            var sysId = match[2];
-            var ga = new GlideAjax('MF_AIUtils');
-            ga.addParam('sysparm_name', 'getAIautoSumRecordInForm');
-            ga.addParam('sysparm_table', table);
-            ga.addParam('sysparm_id', sysId);
-            ga.getXML(function(response) {
-                var answer = response.responseXML.documentElement.getAttribute("answer");
-                removeTyping();
-                if (answer == 'Completed') {
-                    appendMessage('บันทึกสำเร็จ โปรดตรวจสอบในหัวข้อ AI summary ของใบงาน', 'bot');
-                } else {
-                    appendMessage('บันทึกไม่สำเร็จ พบปัญหาในการดำเนินการ โปรดทดลองใหม่อีกครั้งในภายหลัง', 'bot');
-                }
-            });
-        }
-
-
-        function saveSumRecordInForm(sum) {
-            showTyping();
-            var match = window.top.location.pathname.match(/\/record\/([^\/]+)\/([^\/]+)/);
-            var table = match[1];
-            var sysId = match[2];
-            var ga = new GlideAjax('MF_AIUtils');
-            ga.addParam('sysparm_name', 'saveAIautoSumRecordInForm');
-            ga.addParam('sysparm_table', table);
-            ga.addParam('sysparm_id', sysId);
-            ga.addParam('sysparm_summary', sum);
-            ga.getXML(function(response) {
-                var answer = response.responseXML.documentElement.getAttribute("answer");
-                removeTyping();
-                if (answer == 'Completed') {
-                    appendMessage('บันทึกสำเร็จ โปรดตรวจสอบในหัวข้อ AI summary ของใบงาน', 'bot');
-                } else {
-                    appendMessage('บันทึกไม่สำเร็จ พบปัญหาในการดำเนินการ โปรดทดลองใหม่อีกครั้งในภายหลัง', 'bot');
-                }
-            });
-        }
     </script>
-
     </html>
 </j:jelly>]]></html>
         <name>chat_ui_test</name>
@@ -553,13 +561,13 @@
         <sys_created_by>admin.gust</sys_created_by>
         <sys_created_on>2025-06-02 03:14:25</sys_created_on>
         <sys_id>57907ffa83f1a610c43bb488beaad331</sys_id>
-        <sys_mod_count>0</sys_mod_count>
+        <sys_mod_count>66</sys_mod_count>
         <sys_name>chat_ui_test</sys_name>
         <sys_package display_value="MFEC AI Utils GB" source="7efc99ef93e16a507ff935277bba10ee">7efc99ef93e16a507ff935277bba10ee</sys_package>
         <sys_policy/>
         <sys_scope display_value="MFEC AI Utils GB">7efc99ef93e16a507ff935277bba10ee</sys_scope>
         <sys_update_name>sys_ui_page_57907ffa83f1a610c43bb488beaad331</sys_update_name>
         <sys_updated_by>admin.gust</sys_updated_by>
-        <sys_updated_on>2025-06-02 03:14:25</sys_updated_on>
+        <sys_updated_on>2025-06-02 10:08:18</sys_updated_on>
     </sys_ui_page>
 </record_update>
