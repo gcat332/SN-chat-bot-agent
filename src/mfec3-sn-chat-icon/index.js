@@ -45,7 +45,7 @@ const view = (state, { updateState }) => {
 	};
 
 	window.addEventListener("keydown", (event) => {
-		if (event.shiftKey && event.key.toLowerCase() === "c") {
+		if (event.shiftKey && event.key === "Enter") {
 			updateState({ showModal: !state.showModal });
 		}
 
@@ -72,7 +72,7 @@ const view = (state, { updateState }) => {
 				<iframe
 					id="sn-chat-iframe"
 					src="/chat_ui.do"
-					title="Chat AI Agent"
+					title="Chat AI Agent (Shift+Enter)"
 					scrolling="no"
 				/>
 			</div>

@@ -7,6 +7,16 @@ const view = (state, { updateState }) => {
 		updateState({ showModal: !state.showModal });
 	};
 
+	window.addEventListener("keydown", (event) => {
+		if (event.shiftKey && event.key.toLowerCase() === "\\") {
+			updateState({ showModal: !state.showModal });
+		}
+
+		if (event.key === "Escape") {
+			updateState({ showModal: false });
+		}
+	});
+
 	return (
 		<div>
 			<div
@@ -16,13 +26,11 @@ const view = (state, { updateState }) => {
 			>
 				💬
 			</div>
-
-			<div
-				id="sn-chat-modal"
-				className={state.showModal ? "visible" : "hidden"}
-			>
-				<iframe src="/chat_ui.do" title="Chat AI Agent" scrolling="no" />
-			</div>
+			{state.showModal && (
+				<div id="sn-chat-modal">
+					<iframe src="/chat_ui.do" title="Chat AI Agent" scrolling="no" />
+				</div>
+			)}
 		</div>
 	);
 };
