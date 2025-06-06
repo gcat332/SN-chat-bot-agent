@@ -89,17 +89,17 @@ MF_AIUtils_bubbleAction.prototype = Object.extendsObject(global.AbstractAjaxProc
         gr.get(id);
         var requestBody = JSON.stringify({
             table: gr.getTableName(),
-            number: gr.number.toString(),
-            state: gr.state.getDisplayValue().toString(),
-            short_desc: gr.short_description.toString(),
-            description: gr.description.toString(),
-            assignment_group: gr.assignment_group.getDisplayValue().toString(),
-            assigned_to: gr.assigned_to.getDisplayValue().toString(),
-            resolution_code: gr.resolution_code.getDisplayValue().toString(),
-            close_notes: gr.close_notes.toString(),
-            work_note: this._getWorkNoteList(table, id),
-            // ai_kb_answer: this._getAIanswerKB(gr.short_description.toString(), aiModel)
-			ai_kb_answer: ''
+            number: gr.isValidField('number') && gr.number ? gr.number.toString() : '',
+            state: gr.isValidField('state') && gr.state ? gr.state.getDisplayValue().toString() : '',
+            short_desc: gr.isValidField('short_description') && gr.short_description ? gr.short_description.toString() : '',
+            description: gr.isValidField('description') && gr.description ? gr.description.toString() : '',
+            assignment_group: gr.isValidField('assignment_group') && gr.assignment_group ? gr.assignment_group.getDisplayValue().toString() : '',
+            assigned_to: gr.isValidField('assigned_to') && gr.assigned_to ? gr.assigned_to.getDisplayValue().toString() : '',
+            resolution_code: gr.isValidField('resolution_code') && gr.resolution_code ? gr.resolution_code.toString() : '',
+            close_notes: gr.isValidField('close_notes') && gr.close_notes ? gr.close_notes.toString() : '',
+            work_note: gr.isValidField('work_notes') && gr.work_notes ? gr.work_notes.toString() : '',
+            ai_kb_answer: ''
+			// ai_kb_answer: ''
         });
         return requestBody;
     },
@@ -159,13 +159,13 @@ MF_AIUtils_bubbleAction.prototype = Object.extendsObject(global.AbstractAjaxProc
         <sys_created_by>admin.gust</sys_created_by>
         <sys_created_on>2025-06-02 10:21:46</sys_created_on>
         <sys_id>ef6259c38331e610c43bb488beaad31c</sys_id>
-        <sys_mod_count>4</sys_mod_count>
+        <sys_mod_count>15</sys_mod_count>
         <sys_name>MF_AIUtils_bubbleAction</sys_name>
         <sys_package display_value="MFEC AI Utils GB" source="7efc99ef93e16a507ff935277bba10ee">7efc99ef93e16a507ff935277bba10ee</sys_package>
         <sys_policy/>
         <sys_scope display_value="MFEC AI Utils GB">7efc99ef93e16a507ff935277bba10ee</sys_scope>
         <sys_update_name>sys_script_include_ef6259c38331e610c43bb488beaad31c</sys_update_name>
         <sys_updated_by>admin.gust</sys_updated_by>
-        <sys_updated_on>2025-06-02 11:28:48</sys_updated_on>
+        <sys_updated_on>2025-06-05 11:11:07</sys_updated_on>
     </sys_script_include>
 </record_update>
